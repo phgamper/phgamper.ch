@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://phgamper.ch/</loc>
+        <lastmod>2024-09-22</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://phgamper.ch/#about</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+    </url>
+</urlset>

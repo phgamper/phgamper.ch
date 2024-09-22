@@ -1,0 +1,52 @@
+/**
+ * This file is part of the MarkdownBlog project.
+ * It is the style sheet for the footer.
+ *
+ * MarkdownBlog is a lightweight blog software written in php and twitter bootstrap.
+ * Its purpose is to provide a easy way to share your thoughts without any Database
+ * or special setup needed.
+ *
+ * Copyright (C) 2014 Philipp Gamper & Max Schrimpf
+ *
+ * The project is free software: You can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The file is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the project. if not, write to the Free Software Foundation, Inc.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+@CHARSET "UTF-8";
+
+footer {
+	background-color: #fafafa;
+	border-top: 1px solid #E5E5E5;
+	margin-top: 24px;
+	padding: 24px;
+	width: 100%;
+}
+
+footer p {
+	font-size: 11pt;
+}
+
+.poweredby {
+	margin-top: 5px;
+	color: #CCCCCC;
+	font-style: italic;
+}
+
+.poweredby a {
+	color: #CCCCCC;
+	font-weight: bold;
+}
+
+.poweredby a:hover {
+	color: #999999;
+}

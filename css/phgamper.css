@@ -1,0 +1,236 @@
+html {
+    width: 100%;
+    height: 85%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font-family: "Varela Round",Ubuntu,Helvetica,Arial,sans-serif;
+    background: url(/img/singapore_01.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+header {
+    min-height: 80%;
+    color: #fff;
+    text-shadow: 2px 2px 3px rgba(0,0,0,1.0);
+}
+
+header h1 {
+    margin: 10% 0% 4% 0%;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+header p {
+    display: inherit;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background: rgba(0,0,0, 0.5);
+    border-radius: 5px;
+}
+
+header a, header a:visited {
+    color: white;
+}
+
+header:before, section:before {
+    display: block;
+    content: " ";
+    height: 68px;
+    visibility: hidden;
+}
+
+section img {
+    max-width: 100%;
+}
+
+footer {
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+/* Links */
+.sitemap-top-level li p,
+a, a:visited {
+    color: #444444;
+}
+
+header a:hover,
+a:hover {
+    color: #888888;
+}
+
+/* Navigation */
+.navbar-nav {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 3px;
+}
+
+.navbar-brand,
+.nav>li>a {
+    padding: 25px;
+}
+
+.navbar-nav>li>a {
+    line-height: normal;
+}
+
+.navbar-nav {
+    display: table;
+    float: none;
+    margin: 0 0 0 auto;
+    table-layout: fixed;
+    font-size: 1.25em;
+}
+
+/* Content */
+.content-item {
+    background: none;
+    padding: 25px;
+}
+
+#raw {
+    background: rgba(255,255,255,1);
+}
+
+/* Responsive */
+@media screen and (max-width: 767px) {
+    header:before, section:before {
+        height: 56px;
+    }
+
+    .navbar-nav {
+        margin: 0 0 0 0;
+        width: 100%;
+    }
+
+    .nav>li>a {
+        padding: 12px;
+        text-transform: lowercase;
+    }
+
+    .navbar-brand{
+        padding: 20px 25px;
+    }
+
+    h1 {
+        font-size: 18pt;
+    }
+    h2 {
+        font-size: 14pt;
+    }
+    h3 {
+        font-size: 13pt;
+    }
+    h4 {
+        font-size: 12pt;
+    }
+}
+
+.align-middle {
+    display: table;
+    /* width: 100%; */
+    /* height: 100%; */
+    height: 88px;
+}
+
+.align-middle > span{
+    display: table-cell;
+    vertical-align: middle;
+    padding: 4px 0px;
+}
+
+/* borrowed from grayscale */
+/*!
+ * Start Bootstrap - Grayscale v1.1.0 (http://startbootstrap.com/template-overviews/grayscale)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+.intro {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    text-align: center;
+}
+.intro .intro-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+@media (min-width: 768px) {
+    .intro {
+        height: 100%;
+        padding: 0;
+    }
+    .intro .intro-body .brand-heading {
+        padding-top: 5%;
+        font-size: 72px;
+    }
+    .intro .intro-body .intro-text {
+        font-size: 26px;
+    }
+}
+
+.navbar {
+    background: rgba(250, 250, 250, 0.9);
+}
+
+@media (min-width: 768px) {
+    .navbar-custom .navbar-toggle:focus,
+    .navbar-custom .navbar-toggle:active {
+        outline: none;
+    }
+
+    .navbar-custom .nav li a {
+        -webkit-transition: background 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .navbar-custom .nav li a:hover {
+        outline: none;
+        background-color: transparent;
+    }
+
+    .navbar-custom .nav li a:focus,
+    .navbar-custom .nav li a:active {
+        outline: none;
+        background-color: transparent;
+    }
+    .navbar-custom .nav li.active a {
+        background: rgba(200, 200, 200, 0.9);
+    }
+
+    .navbar-custom .nav li.active {
+        outline: none;
+    }
+    .navbar-custom {
+        border-bottom: none;
+        background: transparent;
+        -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+        -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+        transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+    }
+
+    .navbar-custom.top-nav-collapse {
+        background-color: rgba(250, 250, 250, 0.95);
+    }
+}

@@ -1,0 +1,68 @@
+#travel:after {
+    display: block;
+    content: " ";
+    margin-bottom: -68px;
+    visibility: hidden;
+}
+
+#travel img {
+    z-index: -1;
+}
+
+#travel h2 {
+    font-size: 3.25em;
+}
+
+/*
+#travel .onepager-item {
+    background: rgba(255,255,255,1.0);
+    max-height: 800px;
+    overflow: hidden;
+}
+*/
+#travel .pager {
+    color: #444444;
+    padding-bottom: 68px;
+}
+
+#travel .pager a, #travel .pager a:visited {
+    color: #444444;
+}
+
+#travel .pager a:hover {
+    color: #888888;
+}
+
+#travel .container {
+    width: 100%;
+    padding: 0px;
+}
+
+#travel .container {
+    width: 100%;
+    padding: 0px;
+}
+
+#travel .travel-carousel  {
+    width: 100%;
+}
+
+#travel .row {
+    margin: 0px;
+}
+
+#travel .content-item {
+    padding: 0 !important;
+}
+
+#travel a {
+    color: white;
+}
+
+/* Responsive */
+@media screen and (max-width: 767px) {
+    #travel h2 {
+        font-size: 2em;
+    }
+}
+

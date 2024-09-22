@@ -1,0 +1,42 @@
+#intro:before {
+    border-bottom: 68px solid rgba(255, 255, 255, 1.0);
+    border-left: 768px solid transparent;
+}
+
+#intro {
+    overflow-x: hidden;
+}
+
+#intro .onepager-item {
+    background: rgba(255, 255, 255, 1.0);
+}
+
+#intro:before {
+    visibility: visible;
+}
+
+/* Responsive */
+@media screen and (min-width: 768px) {
+    #intro:before {
+        border-left: 960px solid transparent;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    #intro:before {
+        border-left: 1280px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #intro:before {
+        border-left: 1360px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1360px) {
+    #intro:before {
+        border-left: 1920px solid transparent;
+    }
+}
+
