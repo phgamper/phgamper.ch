@@ -1,84 +1,73 @@
-#about .onepager-item {
-    background: rgba(255,255,255,1.0);
-}
-
-#about {
+#about, #cv {
 	z-index: 1000;
 }
 
-#about:before {
-	visibility: visible;
+#cv:before {
+    height:0px;
+}
+
+#about .onepager-item, #about:before {
+    background: rgba(255,255,255,0.9);
+    visibility: visible;
+}
+
+#cv .onepager-item {
+    background: rgba(255,255,255,1.0);
 }
 
 #about h1 {
-	margin: 16px 0 8px 0;
+	margin: 32px 0 16px 0;
 	padding: 0;
 }
 
-#about a{
-	font-size: 16pt;
+#about a {
+	font-size: 1.2em;
 }
 
-
-#about .block {
+#about .block, #cv .block {
 	border-top: 1px solid #dddddd;
 	padding: 4px 4px 32px 4px;
 }
 
-#about .block h4, #about p {
+#about .block h4, #about p, #cv .block h4, #cv p {
 	margin: 8px 4px 4px 4px;
 	padding: 8px 0 0 0;
 	text-transform: uppercase;
 }
 
-#about .block p span {
+#cv .block p span {
 	text-transform: none;
 }
 
-#about .block .desc {
+#cv .block .desc {
 	font-size: 9pt;
 	font-style: italic;
 	padding: 0 0 0 16px;
 }
 
-#about .window {
+#cv .window {
 	font-size: 9pt;
 	text-transform: uppercase;
 }
 
-#about .skills {
+#cv .skills {
 	text-decoration: none;
 }
 
-#about .skills p {
+#cv .skills p {
 	margin-bottom: 8px;
 }
 
-#about .skills ul {
+#cv .skills ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
-#about .skills-group {
-	float: left;
-	margin: 0 32px 0 0;
-}
-
-#about .skills-group span {
-	font-size: 9pt;
+#cv .skills-group span {
+	font-size: 0.75em;
 	font-style: italic;
-	margin: 0 4px 4px;
-	padding: 0;
-}
-
-#about .block p b {
-	text-transform: none;
-}
-
-#about .mono {
-	font-family: monospace;
-	text-transform: none;
+	padding: 0 0 0 4px;
 }
 
 #cv-toggle {
@@ -87,10 +76,6 @@
 }
 
 @media (max-width : 767px) {
-	#about .skills-head {
-		float: none;
-	}
-
 	#about p,
 	#about .skills-group span,
 	#about .block .desc {

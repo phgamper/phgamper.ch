@@ -7,7 +7,7 @@ body {
     width: 100%;
     height: 100%;
     font-family: "Varela Round",Ubuntu,Helvetica,Arial,sans-serif;
-    background: url(/img/singapore_01.jpg) no-repeat center fixed;
+    background: url(/img/leonhart.jpg) no-repeat center 7% fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -148,7 +148,7 @@ a:hover {
     display: table;
     /* width: 100%; */
     /* height: 100%; */
-    height: 88px;
+    height: 64px;
 }
 
 .align-middle > span{
