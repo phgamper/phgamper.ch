@@ -49,9 +49,11 @@
     <link href="./css/sitemap.css" rel="stylesheet" type="text/css">
     <link href="./css/footer.css" rel="stylesheet" type="text/css">
     <link href="./css/phgamper.css" rel="stylesheet" type="text/css">
+    <link href="./css/darkmode.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <script src="./js/darkmode.js"></script>
     <script src="./js/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 
@@ -68,21 +70,14 @@
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#navbar-main">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom fixed-top">
-            <a class="navbar-brand page-scroll" href="/"><i class="fa-solid fa-house"></i></a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-main">
-                <ul class="navbar-nav ms-auto">
-                    <li class="d-none active">
-                        <a href="#page-top"></a>
-                    </li>
-                </ul>
+    <nav class="navbar navbar-custom fixed-top navbar-expand">
+            <button id="darkmode-toggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon" id="darkmode-icon"></i></button>
+            <div id="navbar-main" class="navbar-nav ms-auto" role="navigation">
+                    <a class="nav-item nav-link" href="/#intro">Intro</a>
+                    <a class="nav-item nav-link" href="/#travel">Carousel</a>
+                    <a class="nav-item nav-link" href="/#about">About</a>
+                    <a class="nav-item nav-link navbar-brand" href="/" aria-label="Home"><i class="fa-solid fa-house"></i></a>
             </div>
-            <!-- /.navbar-collapse -->
     </nav>
     <section id="impressum">
         <div class="onepager-item">

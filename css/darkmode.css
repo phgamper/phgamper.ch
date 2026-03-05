@@ -1,0 +1,109 @@
+/* =========================================================
+   Dark mode overrides
+   Applied when <html data-bs-theme="dark"> is set.
+   Bootstrap 5.3 handles most component colours automatically;
+   these rules cover the site-specific custom styles.
+   ========================================================= */
+
+/* --- Navbar --- */
+[data-bs-theme="dark"] .navbar-custom.top-nav-collapse {
+    background-color: rgba(30, 30, 30, 0.95);
+}
+
+/* --- Section content panels --- */
+[data-bs-theme="dark"] #intro .onepager-item {
+    background: rgba(30, 30, 30, 1.0);
+}
+
+[data-bs-theme="dark"] #intro:before {
+    border-bottom-color: rgba(30, 30, 30, 1.0);
+}
+
+[data-bs-theme="dark"] #about .onepager-item,
+[data-bs-theme="dark"] #about:before {
+    background: rgba(30, 30, 30, 0.9);
+}
+
+[data-bs-theme="dark"] #cv .onepager-item {
+    background: rgba(30, 30, 30, 1.0);
+}
+
+[data-bs-theme="dark"] #impressum .onepager-item {
+    background: rgba(30, 30, 30, 1.0);
+}
+
+[data-bs-theme="dark"] #raw {
+    background: rgba(30, 30, 30, 1.0);
+}
+
+/* --- Footer --- */
+[data-bs-theme="dark"] footer {
+    background-color: #1a1a1a;
+    background: #1a1a1a;
+    border-color: #333;
+}
+
+/* --- Links --- */
+[data-bs-theme="dark"] a,
+[data-bs-theme="dark"] a:visited {
+    color: #aaaaaa;
+}
+
+[data-bs-theme="dark"] a:hover {
+    color: #cccccc;
+}
+
+/* Keep header and travel links white (they sit on dark imagery) */
+[data-bs-theme="dark"] header a,
+[data-bs-theme="dark"] header a:visited,
+[data-bs-theme="dark"] #travel a,
+[data-bs-theme="dark"] #travel a:visited {
+    color: white;
+}
+
+/* --- Section dividers --- */
+[data-bs-theme="dark"] #about .block,
+[data-bs-theme="dark"] #cv .block {
+    border-color: #444;
+}
+
+/* --- Active nav link --- */
+[data-bs-theme="dark"] .navbar-custom .nav-link.active {
+    background: rgba(80, 80, 80, 0.9);
+}
+
+/* =========================================================
+   Dark-mode toggle button
+   Styled to match the existing nav links / home button.
+   ========================================================= */
+#darkmode-toggle {
+    background: none;
+    border: none;
+    padding: 25px;
+    cursor: pointer;
+    color: #444444;
+    font-size: 1.25em;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-transition: color 0.3s ease-in-out;
+    -moz-transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out;
+}
+
+#darkmode-toggle:hover {
+    color: #888888;
+}
+
+[data-bs-theme="dark"] #darkmode-toggle {
+    color: #aaaaaa;
+}
+
+[data-bs-theme="dark"] #darkmode-toggle:hover {
+    color: #cccccc;
+}
+
+@media screen and (max-width: 767px) {
+    #darkmode-toggle {
+        padding: 20px 25px;
+    }
+}
