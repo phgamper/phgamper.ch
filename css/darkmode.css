@@ -6,6 +6,14 @@
    ========================================================= */
 
 /* --- Navbar --- */
+/* Give the navbar a visible dark background even at page top so links are
+   readable over the bright background photo in dark mode. In light mode the
+   navbar starts fully transparent and dark links (#444) are legible; in dark
+   mode the links are light so we need a contrasting background from the start. */
+[data-bs-theme="dark"] .navbar-custom {
+    background: rgba(30, 30, 30, 0.75);
+}
+
 [data-bs-theme="dark"] .navbar-custom.top-nav-collapse {
     background-color: rgba(30, 30, 30, 0.95);
 }
