@@ -84,7 +84,7 @@ a:hover {
 }
 
 .navbar-brand,
-.navbar-nav .nav-link {
+.navbar-custom .navbar-nav .nav-link {
     padding: 25px;
 }
 
@@ -114,7 +114,7 @@ a:hover {
         width: 100%;
     }
 
-    .navbar-nav .nav-link {
+    .navbar-custom .navbar-nav .nav-link {
         padding: 12px;
         text-transform: lowercase;
     }
@@ -209,6 +209,7 @@ a:hover {
 .navbar-custom {
     border-bottom: none;
     background: transparent;
+    --bs-navbar-nav-link-padding-x: 25px;
     -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
     -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
     transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
