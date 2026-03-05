@@ -75,6 +75,10 @@
 	margin: 0;
 }
 
+#about .container, #cv .container {
+    max-width: 960px;
+}
+
 @media (max-width : 767px) {
 	#about p,
 	#about .skills-group span,

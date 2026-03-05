@@ -67,24 +67,13 @@
 
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom fixed-top">
-            <a class="navbar-brand page-scroll" href="#page-top"><i class="fa-solid fa-house"></i></a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-main">
-                <ul class="navbar-nav ms-auto">
-                    <li class="d-none active">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link page-scroll" href="#intro">Intro</a></li>
-                    <li class="nav-item"><a class="nav-link page-scroll" href="#travel">Carousel</a></li>
-                    <li class="nav-item"><a class="nav-link page-scroll" href="#about">About</a></li>
-                </ul>
+    <nav class="navbar navbar-custom fixed-top navbar-expand">
+            <div id="navbar-main" class="navbar-nav ms-auto" role="navigation">
+                    <a class="nav-item nav-link page-scroll" href="#intro">Intro</a>
+                    <a class="nav-item nav-link page-scroll" href="#travel">Carousel</a>
+                    <a class="nav-item nav-link page-scroll" href="#about">About</a>
+                    <a class="nav-item nav-link navbar-brand page-scroll" href="#page-top" aria-label="Home"><i class="fa-solid fa-house"></i></a>
             </div>
-            <!-- /.navbar-collapse -->
     </nav>
     <header class="intro">
         <div class="intro-body">
@@ -293,7 +282,8 @@
             <div class="container">
                 <div class="row about">
                     <div class="col-md-12">
-                        <div class="row block collapse cv-collapse">
+                        <div id="cv-content" style="display:none">
+                        <div class="row block">
                             <div class="col-md-3 col-sm-12">
                                 <h4>education</h4>
                             </div>
@@ -338,7 +328,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row block collapse cv-collapse">
+                        <div class="row block">
                             <div class="col-md-3 col-sm-12">
                                 <h4>work</h4>
                             </div>
@@ -427,7 +417,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row block collapse cv-collapse">
+                        <div class="row block">
                             <div class="col-md-3 col-sm-12">
                                 <h4>voluntary work</h4>
                             </div>
@@ -461,7 +451,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row block collapse cv-collapse">
+                        <div class="row block">
                             <div class="col-md-3 col-sm-12">
                                 <h4>certification</h4>
                             </div>
@@ -495,7 +485,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row block collapse cv-collapse">
+                        <div class="row block">
                             <div class="col-md-3 col-12">
                                 <h4>skills</h4>
                             </div>
@@ -549,6 +539,7 @@
                                 </div>
                             </div>
                         </div>
+                        </div><!-- /#cv-content -->
                     </div>
                 </div>
             </div>
@@ -603,7 +594,7 @@
         var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up animated"></i> </span>';
         var expand = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>';
         $('#cv-toggle').on('click', function () {
-            $('div.cv-collapse').toggle(500);
+            $('#cv-content').toggle(500);
             var expanded = $(this).data('expanded');
             $(this).data('expanded', !expanded).html(expanded ? expand : collapse);
         });
