@@ -84,16 +84,13 @@ a:hover {
 }
 
 .navbar-brand,
-.nav>li>a {
+.navbar-nav .nav-link {
     padding: 25px;
-}
-
-.navbar-nav>li>a {
-    line-height: normal;
 }
 
 .navbar-nav {
     font-size: 1.25em;
+    flex-direction: row;
 }
 
 /* Content */
@@ -117,7 +114,7 @@ a:hover {
         width: 100%;
     }
 
-    .nav>li>a {
+    .navbar-nav .nav-link {
         padding: 12px;
         text-transform: lowercase;
     }
