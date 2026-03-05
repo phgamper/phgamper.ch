@@ -48,6 +48,11 @@
     color: white;
 }
 
+#travel .carousel-indicators [data-bs-target] {
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
 /* Responsive */
 @media screen and (max-width: 767px) {
     #travel h2 {
