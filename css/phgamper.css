@@ -84,8 +84,8 @@ a:hover {
 }
 
 .navbar-brand,
-.navbar-nav .nav-link {
-    padding: 25px 63px;
+.navbar-custom .navbar-nav .nav-link {
+    padding: 25px 80px;
 }
 
 .navbar-nav {
@@ -114,7 +114,7 @@ a:hover {
         width: 100%;
     }
 
-    .navbar-nav .nav-link {
+    .navbar-custom .navbar-nav .nav-link {
         padding: 12px;
         text-transform: lowercase;
     }
