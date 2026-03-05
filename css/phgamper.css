@@ -93,10 +93,6 @@ a:hover {
 }
 
 .navbar-nav {
-    display: table;
-    float: none;
-    margin: 0 0 0 auto;
-    table-layout: fixed;
     font-size: 1.25em;
 }
 
@@ -193,44 +189,34 @@ a:hover {
     background: rgba(250, 250, 250, 0.9);
 }
 
-@media (min-width: 768px) {
-    .navbar-custom .navbar-toggler:focus,
-    .navbar-custom .navbar-toggler:active {
-        outline: none;
-    }
+.navbar-custom .nav-link {
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out;
+}
 
-    .navbar-custom .nav li a {
-        -webkit-transition: background 0.3s ease-in-out;
-        -moz-transition: background 0.3s ease-in-out;
-        transition: background 0.3s ease-in-out;
-    }
+.navbar-custom .nav-link:hover {
+    outline: none;
+    background-color: transparent;
+}
 
-    .navbar-custom .nav li a:hover {
-        outline: none;
-        background-color: transparent;
-    }
+.navbar-custom .nav-link:focus,
+.navbar-custom .nav-link:active {
+    outline: none;
+    background-color: transparent;
+}
+.navbar-custom .nav-link.active {
+    background: rgba(200, 200, 200, 0.9);
+    outline: none;
+}
+.navbar-custom {
+    border-bottom: none;
+    background: transparent;
+    -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+    -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+    transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
 
-    .navbar-custom .nav li a:focus,
-    .navbar-custom .nav li a:active {
-        outline: none;
-        background-color: transparent;
-    }
-    .navbar-custom .nav li.active a {
-        background: rgba(200, 200, 200, 0.9);
-    }
-
-    .navbar-custom .nav li.active {
-        outline: none;
-    }
-    .navbar-custom {
-        border-bottom: none;
-        background: transparent;
-        -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
-        -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
-        transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
-    }
-
-    .navbar-custom.top-nav-collapse {
-        background-color: rgba(250, 250, 250, 0.95);
-    }
+.navbar-custom.top-nav-collapse {
+    background-color: rgba(250, 250, 250, 0.95);
 }
