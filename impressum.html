@@ -65,21 +65,19 @@
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#navbar-main">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom navbar-fixed-top">
-            <div class="navbar-header navbar-right">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    Menu <i class="fa-solid fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="/"><i class="fa-solid fa-house"></i></a>
-            </div>
+    <nav class="navbar navbar-custom fixed-top">
+            <a class="navbar-brand page-scroll" href="/"><i class="fa-solid fa-house"></i></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fa-solid fa-bars"></i>
+            </button>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="hidden active">
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="navbar-nav ms-auto">
+                    <li class="d-none active">
                         <a href="#page-top"></a>
                     </li>
                 </ul>
@@ -147,7 +145,7 @@
                                     href="/impressum.html">impressum</a></p>
                         </div>
                         <div class="col-md-4">
-                            <p class="pull-right"><a href="#page-top" class="page-scroll">Back to top</a></p>
+                            <p class="float-end"><a href="#page-top" class="page-scroll">Back to top</a></p>
                         </div>
                     </div>
                 </div>

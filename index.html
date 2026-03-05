@@ -63,27 +63,25 @@
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#navbar-main">
 
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom navbar-fixed-top">
-            <div class="navbar-header navbar-right">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    Menu <i class="fa-solid fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top"><i class="fa-solid fa-house"></i></a>
-            </div>
+    <nav class="navbar navbar-custom fixed-top">
+            <a class="navbar-brand page-scroll" href="#page-top"><i class="fa-solid fa-house"></i></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fa-solid fa-bars"></i>
+            </button>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="hidden active">
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="navbar-nav ms-auto">
+                    <li class="d-none active">
                         <a href="#page-top"></a>
                     </li>
-                    <li><a class="page-scroll" href="#intro">Intro</a></li>
-                    <li><a class="page-scroll" href="#travel">Carousel</a></li>
-                    <li><a class="page-scroll" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link page-scroll" href="#intro">Intro</a></li>
+                    <li class="nav-item"><a class="nav-link page-scroll" href="#travel">Carousel</a></li>
+                    <li class="nav-item"><a class="nav-link page-scroll" href="#about">About</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -92,16 +90,16 @@
         <div class="intro-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-8 offset-md-2">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h1 class="brand-heading">phgamper.ch</h1>
-                        <p class="hidden-sm hidden-xs">"99 little bugs in the code | take one down, patch it around |
+                        <p class="d-none d-md-block">"99 little bugs in the code | take one down, patch it around |
                             127 little bugs in the code ..."</p>
                     </div>
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-8 offset-md-2">
                         <a href="#intro" class="page-scroll">
                             <span class="fa-4x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>
                         </a>
@@ -146,64 +144,66 @@
                 <div class="box">
                     <div id="travel-carousel" class="carousel slide">
                         <!-- Indicators -->
-                        <ol class="carousel-indicators hidden-xs">
-                            <li data-target="#travel-carousel" data-slide-to="0" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="1" class="active"></li>
-                            <li data-target="#travel-carousel" data-slide-to="2" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="3" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="4" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="5" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="6" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="7" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="8" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="9" class=""></li>
-                            <li data-target="#travel-carousel" data-slide-to="10" class=""></li>
-                        </ol>
+                        <div class="carousel-indicators d-none d-sm-flex">
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="1" class="active" aria-current="true" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="2" class="" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="3" class="" aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="4" class="" aria-label="Slide 5"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="5" class="" aria-label="Slide 6"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="6" class="" aria-label="Slide 7"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="7" class="" aria-label="Slide 8"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="8" class="" aria-label="Slide 9"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="9" class="" aria-label="Slide 10"></button>
+                            <button type="button" data-bs-target="#travel-carousel" data-bs-slide-to="10" class="" aria-label="Slide 11"></button>
+                        </div>
 
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner">
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/zurich.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/zurich.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/aletschgletscher.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/aletschgletscher.jpg" alt="">
                             </div>
-                            <div class="item active">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/singapore.jpg" alt="">
+                            <div class="carousel-item active">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/singapore.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/shanghai.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/shanghai.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/sentosa.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/sentosa.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/hangzhou.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/hangzhou.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/wuzhen.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/wuzhen.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/edinburgh.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/edinburgh.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/venedig.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/venedig.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/churfirsten.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/churfirsten.jpg" alt="">
                             </div>
-                            <div class="item">
-                                <img class="travel-carousel img-responsive img-full" src="./img/carousel/zurich-02.jpg" alt="">
+                            <div class="carousel-item">
+                                <img class="travel-carousel img-fluid img-full" src="./img/carousel/zurich-02.jpg" alt="">
                             </div>
                         </div>
 
                         <!-- Controls -->
-                        <a class="left carousel-control" href="#travel-carousel" data-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#travel-carousel" data-bs-slide="prev">
                             <i class="icon-prev fa-solid fa-chevron-left"></i>
-                        </a>
-                        <a class="right carousel-control" href="#travel-carousel" data-slide="next">
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#travel-carousel" data-bs-slide="next">
                             <i class="icon-next fa-solid fa-chevron-right"></i>
-                        </a>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -236,12 +236,12 @@
                                     </div>
                                 </div-->
                                 <div class="row">
-                                    <div class="col-xs-1 text-center align-middle">
+                                    <div class="col-1 text-center align-middle">
                                         <span><i class="fa-solid fa-2x fa-envelope wow bounceIn animated" data-wow-delay=".2s"
                                                 style="visibility: visible; animation-delay: 0.2s; animation-name: bounceIn;"></i></span>
                                     </div>
                                     <!-- obfuscate-->
-                                        <div class="col-xs-8 align-middle">
+                                        <div class="col-8 align-middle">
                                             <!--span class="minerva"> <a href="mailto:phgamper@gmail.com" target="_blank">phgamper@gmail.com</a> </span-->
                                             <span class="minerva">
                                                 PG4gdWVycz0iem52eWdiOmN1dG56Y3JlQHR6bnZ5LnBieiIgZ25ldHJnPSJfb3luYXgiPmN1dG56Y3JlQHR6bnZ5LnBiejwvbj4=
@@ -250,22 +250,22 @@
                                     <!--/obfuscate-->
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-1 text-center align-middle">
+                                    <div class="col-1 text-center align-middle">
                                         <span><i class="fa-brands fa-2x fa-github wow bounceIn animated" data-wow-delay=".3s"
                                                 style="visibility: visible; animation-delay: 0.3s; animation-name: bounceIn;"></i></span>
                                     </div>
-                                    <div class="col-xs-8 align-middle">
+                                    <div class="col-8 align-middle">
                                         <span> <a href="https://github.com/phgamper"
                                                 target="_blank">https://github.com/phgamper</a> </span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-1 text-center align-middle">
+                                    <div class="col-1 text-center align-middle">
                                         <span><i class="fa-brands fa-2x fa-linkedin wow bounceIn animated"
                                                 data-wow-delay=".4s"
                                                 style="visibility: visible; animation-delay: 0.4s; animation-name: bounceIn;"></i></span>
                                     </div>
-                                    <div class="col-xs-8 align-middle">
+                                    <div class="col-8 align-middle">
                                         <span> <a href="https://linkedin.com/in/phgamper"
                                                 target="_blank">https://linkedin.com/in/phgamper</a> </span>
                                     </div>
@@ -273,13 +273,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4 col-sm-offset-0 col-xs-offset-2 col-xs-8">
-                        <img src="./img/phgamper-2022.png" class="thumbnail">
+                    <div class="col-md-3 col-sm-4 col-8 offset-2 offset-sm-0">
+                        <img src="./img/phgamper-2022.png" class="img-thumbnail">
                     </div>
                 </div>
 
                 <div class="row about" style="margin-bottom: 16px">
-                    <div class="col-xs-8 col-xs-offset-2 text-center">
+                    <div class="col-8 offset-2 text-center">
                         <a id="cv-toggle">
                             <span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>
                         </a>
@@ -496,10 +496,10 @@
                             </div>
                         </div>
                         <div class="row block collapse cv-collapse">
-                            <div class="col-md-3 col-xs-12">
+                            <div class="col-md-3 col-12">
                                 <h4>skills</h4>
                             </div>
-                            <div class="col-md-9 col-xs-12 skills">
+                            <div class="col-md-9 col-12 skills">
                                 <div class="row">
                                     <div class="col-md-3 skills-group">
                                         <p>Operating Systems</p>
@@ -581,7 +581,7 @@
                                     href="/impressum.html">impressum</a></p>
                         </div>
                         <div class="col-md-4">
-                            <p class="pull-right"><a href="#page-top" class="page-scroll">Back to top</a></p>
+                            <p class="float-end"><a href="#page-top" class="page-scroll">Back to top</a></p>
                         </div>
                     </div>
                 </div>
@@ -597,7 +597,7 @@
     <script src="./js/jquery.easing.min.js"></script>
     <script src="./js/grayscale.js"></script>
     <script>
-        $('.carousel').carousel({
+        new bootstrap.Carousel(document.getElementById('travel-carousel'), {
             interval: 5000
         });
         var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up animated"></i> </span>';
