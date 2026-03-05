@@ -85,7 +85,7 @@ a:hover {
 
 .navbar-brand,
 .navbar-custom .navbar-nav .nav-link {
-    padding: 25px 80px;
+    padding: 25px;
 }
 
 .navbar-nav {
@@ -209,6 +209,7 @@ a:hover {
 .navbar-custom {
     border-bottom: none;
     background: transparent;
+    --bs-navbar-nav-link-padding-x: 25px;
     -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
     -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
     transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
