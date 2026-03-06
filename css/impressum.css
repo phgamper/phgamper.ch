@@ -1,3 +1,41 @@
+#impressum:before {
+    border-bottom: 68px solid rgba(255, 255, 255, 1.0);
+    border-left: 768px solid transparent;
+}
+
+#impressum {
+    overflow-x: hidden;
+}
+
+#impressum:before {
+    visibility: visible;
+}
+
+/* Responsive */
+@media screen and (min-width: 768px) {
+    #impressum:before {
+        border-left: 960px solid transparent;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    #impressum:before {
+        border-left: 1280px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #impressum:before {
+        border-left: 1360px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1360px) {
+    #impressum:before {
+        border-left: 1920px solid transparent;
+    }
+}
+
 #impressum .onepager-item {
     background: rgba(255,255,255,1.0);
 }
