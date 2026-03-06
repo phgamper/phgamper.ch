@@ -6,12 +6,20 @@
    ========================================================= */
 
 /* --- Navbar --- */
-/* Give the navbar a visible dark background even at page top so links are
-   readable over the bright background photo in dark mode. In light mode the
-   navbar starts fully transparent and dark links (#444) are legible; in dark
-   mode the links are light so we need a contrasting background from the start. */
-[data-bs-theme="dark"] .navbar-custom {
-    background: rgba(30, 30, 30, 0.75);
+/* At page top the navbar is fully transparent. In dark mode the default light
+   link colour (#aaa) is barely visible against the bright background photo, so
+   we use a dark colour (#333) instead – mirroring light mode's #444.
+   Once the user scrolls and top-nav-collapse fires (dark opaque background),
+   links switch to white. Both changes fade smoothly via the colour transition
+   added to .navbar-custom .nav-link in phgamper.css. */
+[data-bs-theme="dark"] .navbar-custom:not(.top-nav-collapse) .nav-link,
+[data-bs-theme="dark"] .navbar-custom:not(.top-nav-collapse) #darkmode-toggle {
+    color: #333333;
+}
+
+[data-bs-theme="dark"] .navbar-custom.top-nav-collapse .nav-link,
+[data-bs-theme="dark"] .navbar-custom.top-nav-collapse #darkmode-toggle {
+    color: #ffffff;
 }
 
 [data-bs-theme="dark"] .navbar-custom.top-nav-collapse {
@@ -93,9 +101,9 @@
     font-size: 1.25em;
     line-height: 1;
     text-decoration: none;
-    -webkit-transition: color 0.3s ease-in-out;
-    -moz-transition: color 0.3s ease-in-out;
-    transition: color 0.3s ease-in-out;
+    -webkit-transition: color 0.5s ease-in-out;
+    -moz-transition: color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
 }
 
 #darkmode-toggle:hover {
