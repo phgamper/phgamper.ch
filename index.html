@@ -573,11 +573,17 @@
     <script src="./js/prism.js"></script>
     <script src="./js/mdblog.js"></script>
     <script src="./js/minerva.js"></script>
-    <script src="./js/grayscale.js"></script>
     <script>
         new bootstrap.Carousel(document.getElementById('travel-carousel'), {
             interval: 5000
         });
+
+        // Collapse navbar: add opaque background once the page is scrolled past 50 px
+        function collapseNavbar() {
+            document.querySelector('.navbar.fixed-top').classList.toggle('top-nav-collapse', window.scrollY > 50);
+        }
+        window.addEventListener('scroll', collapseNavbar);
+        collapseNavbar();
         var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up"></i> </span>';
         var expand = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down"></i> </span>';
         $('#cv-toggle').on('click', function () {
