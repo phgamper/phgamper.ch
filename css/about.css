@@ -76,7 +76,7 @@
 }
 
 #about .container, #cv .container {
-    max-width: 960px;
+    max-width: 1040px;
 }
 
 @media (max-width : 767px) {
