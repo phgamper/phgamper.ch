@@ -91,7 +91,12 @@ a:hover {
 
 .navbar-nav {
     font-size: 1.25em;
-    flex-direction: row;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        flex-direction: row;
+    }
 }
 
 /* Content */
