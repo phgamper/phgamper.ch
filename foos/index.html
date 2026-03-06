@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="NOINDEX,NOFOLLOW">
+    <meta name="author" content="Philipp Gamper">
+    <title>Foos Tracker – phgamper.ch</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/phgamper.css" rel="stylesheet" type="text/css">
+    <link href="../css/darkmode.css" rel="stylesheet" type="text/css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script src="../js/darkmode.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <style>
+        body {
+            background: none;
+            background-color: var(--bs-body-bg);
+        }
+
+        .foos-wrapper {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* Square corners for all form elements, cards, buttons */
+        .foos-wrapper .card,
+        .foos-wrapper .card-header,
+        .foos-wrapper .card-footer,
+        .foos-wrapper .form-control,
+        .foos-wrapper .form-select,
+        .foos-wrapper .btn,
+        .foos-wrapper .badge,
+        .foos-wrapper .input-group > * {
+            border-radius: 0 !important;
+        }
+
+        .category-card {
+            margin-bottom: 1rem;
+        }
+
+        .category-card .card-header {
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Export modal: 80px margin all around, full-screen, no rounded corners */
+        #exportModal {
+            --bs-modal-border-radius: 0;
+            --bs-modal-inner-border-radius: 0;
+        }
+
+        #exportModal .modal-dialog {
+            position: absolute;
+            top: 80px;
+            left: 80px;
+            right: 80px;
+            bottom: 80px;
+            margin: 0;
+            max-width: none;
+            width: auto;
+        }
+
+        #exportModal .modal-content {
+            border-radius: 0 !important;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #exportModal .modal-body {
+            overflow-y: auto;
+            flex: 1 1 auto;
+        }
+
+        #exportModal .modal-header,
+        #exportModal .modal-footer,
+        #exportModal .btn-close,
+        #exportModal .btn {
+            border-radius: 0 !important;
+        }
+
+        #csv-output {
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.78rem;
+            background-color: var(--bs-tertiary-bg);
+            border: 1px solid var(--bs-border-color);
+            padding: 1rem;
+            margin: 0;
+            min-height: 150px;
+        }
+
+        /* Compact number inputs */
+        .num-input {
+            max-width: 72px;
+        }
+
+        .num-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 767.98px) {
+            .foos-wrapper {
+                padding-top: 64px;
+            }
+
+            #exportModal .modal-dialog {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom fixed-top navbar-expand-md">
+        <button id="darkmode-toggle" aria-label="Toggle dark mode"><span class="fa-stack"><i class="fa-solid fa-circle fa-stack-2x"></i><i class="fa-solid fa-moon fa-stack-1x fa-inverse" id="darkmode-icon"></i></span></button>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <div class="navbar-nav ms-auto" role="navigation">
+                <a class="nav-item nav-link navbar-brand" href="/" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="foos-wrapper">
+        <div class="container">
+
+            <div class="row mb-4">
+                <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <h1 class="mb-0">3 auf 5 – Tracker</h1>
+                        <p class="text-muted mb-0 small">All data is stored locally in your browser.</p>
+                    </div>
+                    <button class="btn btn-outline-secondary" id="export-btn" type="button">
+                        <i class="fa-solid fa-file-export me-1"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Session Form -->
+            <form id="session-form" novalidate>
+
+                <!-- Session metadata -->
+                <div class="card category-card">
+                    <div class="card-header">Session</div>
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-12 col-sm-4">
+                                <label for="session-date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="session-date" required>
+                            </div>
+
+                            <div class="col-12 col-sm-5">
+                                <label class="form-label d-block">Table model</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-L" value="L" required>
+                                        <label class="form-check-label" for="tm-L">Leonhart</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-G" value="G">
+                                        <label class="form-check-label" for="tm-G">Garlando</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-U" value="U">
+                                        <label class="form-check-label" for="tm-U">Ullrich</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-T" value="T">
+                                        <label class="form-check-label" for="tm-T">Tornado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-B" value="B">
+                                        <label class="form-check-label" for="tm-B">Bonzini</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-3">
+                                <label for="set-size" class="form-label">Set size</label>
+                                <select class="form-select" id="set-size" required>
+                                    <option value="10">10</option>
+                                    <option value="25" selected>25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wall -->
+                <div class="card category-card">
+                    <div class="card-header">Wall</div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="wall-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="wall-lp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="wall-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="wall-sp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="wall-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="wall-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="wall-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="wall-spu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lane -->
+                <div class="card category-card">
+                    <div class="card-header">Lane</div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="lane-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="lane-lp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="lane-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="lane-sp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="lane-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="lane-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="lane-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="lane-spu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle -->
+                <div class="card category-card">
+                    <div class="card-header">Middle</div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="mid-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="mid-lp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="mid-sp" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="mid-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="mid-spu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-straight" class="form-label mb-1">Straight</label>
+                                <input type="number" class="form-control num-input" id="mid-straight" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mb-5">
+                    <button type="submit" class="btn btn-primary" id="save-btn">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-outline-danger ms-auto" id="clear-btn">
+                        <i class="fa-solid fa-trash me-1"></i> Clear all
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-3">
+        <small class="text-muted">Data is stored in your browser's local storage only – nothing leaves your device.</small>
+    </footer>
+
+    <!-- Export Modal -->
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">
+                        <i class="fa-solid fa-file-csv me-2"></i>CSV Export
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">Stored sessions as CSV – paste directly into Excel.</p>
+                    <pre id="csv-output"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" id="copy-csv-btn">
+                        <i class="fa-solid fa-copy me-1"></i> Copy
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var STORAGE_KEY = 'foos-3auf5-v2';
+
+            /* Result field definitions – order determines CSV column order */
+            var FIELDS = [
+                { id: 'wall-lp',     label: 'Wall Long Pull'    },
+                { id: 'wall-sp',     label: 'Wall Short Pull'   },
+                { id: 'wall-lpu',    label: 'Wall Long Push'    },
+                { id: 'wall-spu',    label: 'Wall Short Push'   },
+                { id: 'lane-lp',     label: 'Lane Long Pull'    },
+                { id: 'lane-sp',     label: 'Lane Short Pull'   },
+                { id: 'lane-lpu',    label: 'Lane Long Push'    },
+                { id: 'lane-spu',    label: 'Lane Short Push'   },
+                { id: 'mid-lp',      label: 'Mid Long Pull'     },
+                { id: 'mid-sp',      label: 'Mid Short Pull'    },
+                { id: 'mid-lpu',     label: 'Mid Long Push'     },
+                { id: 'mid-spu',     label: 'Mid Short Push'    },
+                { id: 'mid-straight', label: 'Mid Straight'     }
+            ];
+
+            function loadSessions() {
+                try {
+                    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveSessions(sessions) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+                } catch (e) {
+                    console.warn('foos: could not persist sessions', e);
+                }
+            }
+
+            function generateCsv(sessions) {
+                var headers = ['Date', 'Table', 'Set size'].concat(
+                    FIELDS.map(function (f) { return f.label; })
+                );
+                var lines = [headers.join(';')];
+                var sorted = sessions.slice().sort(function (a, b) {
+                    return a.date.localeCompare(b.date);
+                });
+                sorted.forEach(function (s) {
+                    var row = [s.date, s.table, s.setSize];
+                    FIELDS.forEach(function (f) {
+                        row.push(s[f.id] != null ? s[f.id] : '');
+                    });
+                    lines.push(row.join(';'));
+                });
+                return lines.join('\n');
+            }
+
+            function resetResultFields() {
+                FIELDS.forEach(function (f) {
+                    document.getElementById(f.id).value = '';
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+
+                /* Pre-fill date with today */
+                document.getElementById('session-date').value = new Date().toISOString().slice(0, 10);
+
+                /* Save session */
+                document.getElementById('session-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    var date = document.getElementById('session-date').value;
+                    var tableEl = document.querySelector('input[name="table-model"]:checked');
+                    var setSize = document.getElementById('set-size').value;
+
+                    if (!date) {
+                        document.getElementById('session-date').focus();
+                        return;
+                    }
+                    if (!tableEl) {
+                        document.getElementById('tm-L').focus();
+                        return;
+                    }
+
+                    var session = {
+                        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+                        date: date,
+                        table: tableEl.value,
+                        setSize: setSize
+                    };
+
+                    FIELDS.forEach(function (f) {
+                        var raw = document.getElementById(f.id).value;
+                        session[f.id] = raw !== '' ? parseInt(raw, 10) : null;
+                    });
+
+                    var sessions = loadSessions();
+                    sessions.push(session);
+                    saveSessions(sessions);
+
+                    /* Reset result fields, keep date and table selection */
+                    resetResultFields();
+
+                    /* Brief save confirmation */
+                    var btn = document.getElementById('save-btn');
+                    var orig = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Saved!';
+                    btn.disabled = true;
+                    setTimeout(function () {
+                        btn.innerHTML = orig;
+                        btn.disabled = false;
+                    }, 1500);
+                });
+
+                /* Clear all sessions */
+                document.getElementById('clear-btn').addEventListener('click', function () {
+                    if (confirm('Delete all stored sessions?')) {
+                        saveSessions([]);
+                    }
+                });
+
+                /* Open export modal and populate CSV */
+                document.getElementById('export-btn').addEventListener('click', function () {
+                    var sessions = loadSessions();
+                    document.getElementById('csv-output').textContent = generateCsv(sessions);
+                    new bootstrap.Modal(document.getElementById('exportModal')).show();
+                });
+
+                /* Copy CSV to clipboard */
+                document.getElementById('copy-csv-btn').addEventListener('click', function () {
+                    var text = document.getElementById('csv-output').textContent;
+                    var btn = document.getElementById('copy-csv-btn');
+                    var orig = btn.innerHTML;
+
+                    function showCopied() {
+                        btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Copied!';
+                        setTimeout(function () { btn.innerHTML = orig; }, 1800);
+                    }
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(showCopied).catch(function () {
+                            fallbackCopy(text);
+                            showCopied();
+                        });
+                    } else {
+                        fallbackCopy(text);
+                        showCopied();
+                    }
+                });
+
+                function fallbackCopy(text) {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (ex) { /* ignore */ }
+                    document.body.removeChild(ta);
+                }
+
+            });
+        }());
+    </script>
+
+</body>
+
+</html>
