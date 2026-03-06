@@ -14,6 +14,16 @@
     height: 100%;
 }
 
+#impressumModal h1 {
+    font-size: 1.5rem;
+    margin: 1.2rem 0 0.5rem;
+}
+
+#impressumModal p {
+    font-size: 0.95rem;
+    margin: 0.4rem 0;
+}
+
 /* On narrow screens keep a smaller but still comfortable gap */
 @media screen and (max-width: 767px) {
     #impressumModal {
