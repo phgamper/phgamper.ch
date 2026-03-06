@@ -26,6 +26,23 @@
     background-color: rgba(30, 30, 30, 0.95);
 }
 
+/* On mobile the navbar is always opaque, so it needs the dark background and
+   white links even before the user scrolls (no top-nav-collapse class yet). */
+@media (max-width: 767.98px) {
+    [data-bs-theme="dark"] .navbar-custom {
+        background-color: rgba(30, 30, 30, 0.95);
+    }
+
+    [data-bs-theme="dark"] .navbar-custom:not(.top-nav-collapse) .nav-link,
+    [data-bs-theme="dark"] .navbar-custom:not(.top-nav-collapse) #darkmode-toggle {
+        color: #ffffff;
+    }
+
+    [data-bs-theme="dark"] .navbar-custom:not(.top-nav-collapse) #darkmode-toggle {
+        --fa-inverse: rgba(30, 30, 30, 0.95);
+    }
+}
+
 /* --- Section content panels --- */
 [data-bs-theme="dark"] #intro .onepager-item {
     background: rgba(30, 30, 30, 1.0);
