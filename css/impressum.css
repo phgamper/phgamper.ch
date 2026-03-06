@@ -1,34 +1,44 @@
 /* =========================================================
    Impressum Modal
-   64px inset on all sides via Bootstrap 5 CSS custom properties.
-   The modal's default z-index (1055) already exceeds the navbar's
+   Fills the viewport with an even 64px margin on all four sides.
+   Bootstrap's modal z-index (1055) already exceeds the navbar's
    (1030), so it naturally covers the navigation bar.
    ========================================================= */
 
-#impressumModal {
-    --bs-modal-margin: 64px;
-    --bs-modal-width: calc(100vw - 128px);
+#impressumModal .modal-dialog {
+    margin: 64px;
+    max-width: calc(100vw - 128px);
+    height: calc(100vh - 128px);
 }
 
 #impressumModal .modal-content {
     height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    --bs-modal-border-radius: 0;
+    --bs-modal-inner-border-radius: 0;
+}
+
+#impressumModal .modal-body {
+    cursor: pointer;
 }
 
 #impressumModal h1 {
-    font-size: 1.5rem;
-    margin: 1.2rem 0 0.5rem;
+    font-size: 1.1rem;
+    margin: 1rem 0 0.4rem;
 }
 
 #impressumModal p {
-    font-size: 0.95rem;
-    margin: 0.4rem 0;
+    font-size: 1rem;
+    margin: 0.3rem 0;
 }
 
-/* On narrow screens keep a smaller but still comfortable gap */
+/* On narrow screens use a smaller but still comfortable gap */
 @media screen and (max-width: 767px) {
-    #impressumModal {
-        --bs-modal-margin: 16px;
-        --bs-modal-width: calc(100vw - 32px);
+    #impressumModal .modal-dialog {
+        margin: 16px;
+        max-width: calc(100vw - 32px);
+        height: calc(100vh - 32px);
     }
 }
 
