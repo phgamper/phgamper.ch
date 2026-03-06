@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="NOINDEX,NOFOLLOW">
     <meta name="author" content="Philipp Gamper">
-    <title>Training Tracker – phgamper.ch</title>
+    <title>Foos Tracker – phgamper.ch</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="../css/phgamper.css" rel="stylesheet" type="text/css">
@@ -36,12 +36,7 @@
             min-height: 100vh;
         }
 
-        .foos-card {
-            border-radius: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Square corners for all form elements, cards, buttons, badges */
+        /* Square corners for all form elements, cards, buttons */
         .foos-wrapper .card,
         .foos-wrapper .card-header,
         .foos-wrapper .card-footer,
@@ -49,28 +44,78 @@
         .foos-wrapper .form-select,
         .foos-wrapper .btn,
         .foos-wrapper .badge,
-        .foos-wrapper .list-group,
-        .foos-wrapper .list-group-item {
-            border-radius: 0;
+        .foos-wrapper .input-group > * {
+            border-radius: 0 !important;
         }
 
-        .entry-list {
-            max-height: 400px;
-            overflow-y: auto;
+        .category-card {
+            margin-bottom: 1rem;
         }
 
-        .entry-item {
-            font-size: 0.9rem;
-        }
-
-        .entry-item .entry-date {
+        .category-card .card-header {
             font-weight: 600;
-            min-width: 130px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Export modal: 80px margin all around, full-screen, no rounded corners */
+        #exportModal {
+            --bs-modal-border-radius: 0;
+            --bs-modal-inner-border-radius: 0;
+        }
+
+        #exportModal .modal-dialog {
+            position: absolute;
+            top: 80px;
+            left: 80px;
+            right: 80px;
+            bottom: 80px;
+            margin: 0;
+            max-width: none;
+            width: auto;
+        }
+
+        #exportModal .modal-content {
+            border-radius: 0 !important;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #exportModal .modal-body {
+            overflow-y: auto;
+            flex: 1 1 auto;
+        }
+
+        #exportModal .modal-header,
+        #exportModal .modal-footer,
+        #exportModal .btn-close,
+        #exportModal .btn {
+            border-radius: 0 !important;
+        }
+
+        #csv-output {
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.78rem;
+            background-color: var(--bs-tertiary-bg);
+            border: 1px solid var(--bs-border-color);
+            padding: 1rem;
+            margin: 0;
+            min-height: 150px;
         }
 
         @media (max-width: 767.98px) {
             .foos-wrapper {
                 padding-top: 64px;
+            }
+
+            #exportModal .modal-dialog {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
             }
         }
     </style>
@@ -95,112 +140,197 @@
         <div class="container">
 
             <div class="row mb-4">
-                <div class="col-12">
-                    <h1>Training Tracker</h1>
-                    <p class="text-muted">Log your training sessions. All data is stored locally in your browser.</p>
+                <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <h1 class="mb-0">3 auf 5 – Tracker</h1>
+                        <p class="text-muted mb-0 small">Alle Daten werden lokal im Browser gespeichert.</p>
+                    </div>
+                    <button class="btn btn-outline-secondary" id="export-btn" type="button">
+                        <i class="fa-solid fa-file-export me-1"></i> Export CSV
+                    </button>
                 </div>
             </div>
 
-            <!-- Log new entry -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card foos-card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Log a Session</h5>
-                        </div>
-                        <div class="card-body">
-                            <form id="training-form" novalidate>
+            <!-- Session Form -->
+            <form id="session-form" novalidate>
 
-                                <div class="mb-3">
-                                    <label for="entry-date" class="form-label">Date</label>
-                                    <input type="date" class="form-control" id="entry-date" required>
+                <!-- Session metadata -->
+                <div class="card category-card">
+                    <div class="card-header">Session</div>
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-12 col-sm-4">
+                                <label for="session-date" class="form-label">Datum</label>
+                                <input type="date" class="form-control" id="session-date" required>
+                            </div>
+
+                            <div class="col-12 col-sm-5">
+                                <label class="form-label d-block">Tischmodell</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-L" value="L" required>
+                                        <label class="form-check-label" for="tm-L">Leonhart</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-G" value="G">
+                                        <label class="form-check-label" for="tm-G">Garlando</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-U" value="U">
+                                        <label class="form-check-label" for="tm-U">Ullrich</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-T" value="T">
+                                        <label class="form-check-label" for="tm-T">Tornado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline me-0">
+                                        <input class="form-check-input" type="radio" name="table-model" id="tm-B" value="B">
+                                        <label class="form-check-label" for="tm-B">Bonzini</label>
+                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label for="entry-type" class="form-label">Activity type</label>
-                                    <select class="form-select" id="entry-type" required>
-                                        <option value="">— select —</option>
-                                        <option value="run">Run</option>
-                                        <option value="bike">Bike</option>
-                                        <option value="swim">Swim</option>
-                                        <option value="gym">Gym</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+                            <div class="col-12 col-sm-3">
+                                <label for="set-size" class="form-label">Satzgrösse</label>
+                                <select class="form-select" id="set-size" required>
+                                    <option value="10">10</option>
+                                    <option value="25" selected>25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label for="entry-duration" class="form-label">Duration (min)</label>
-                                    <input type="number" class="form-control" id="entry-duration" min="1" placeholder="e.g. 45">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="entry-distance" class="form-label">Distance (km) <span class="text-muted">(optional)</span></label>
-                                    <input type="number" class="form-control" id="entry-distance" min="0" step="0.1" placeholder="e.g. 10.5">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="entry-notes" class="form-label">Notes <span class="text-muted">(optional)</span></label>
-                                    <textarea class="form-control" id="entry-notes" rows="2" placeholder="How did it feel?"></textarea>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">Save entry</button>
-                            </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Summary -->
-                <div class="col-lg-6">
-                    <div class="card foos-card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Recent entries</h5>
-                            <button id="clear-all" class="btn btn-sm btn-outline-danger" title="Delete all entries">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                        <div class="card-body p-0">
-                            <div id="entry-list" class="entry-list list-group list-group-flush">
-                                <div class="list-group-item text-muted fst-italic" id="empty-msg">No entries yet.</div>
+                <!-- Wand (Wall) -->
+                <div class="card category-card">
+                    <div class="card-header">Wand (Wall)</div>
+                    <div class="card-body">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <label for="wall-pull" class="form-label">Ziehen</label>
+                                <input type="number" class="form-control" id="wall-pull" min="0" placeholder="0">
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="card foos-card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Summary (all time)</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <div class="col-4">
-                                    <div class="fs-4 fw-bold" id="summary-sessions">0</div>
-                                    <div class="text-muted small">Sessions</div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="fs-4 fw-bold" id="summary-duration">0</div>
-                                    <div class="text-muted small">Total min</div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="fs-4 fw-bold" id="summary-distance">0</div>
-                                    <div class="text-muted small">Total km</div>
-                                </div>
+                            <div class="col-4">
+                                <label for="wall-push" class="form-label">Schieben</label>
+                                <input type="number" class="form-control" id="wall-push" min="0" placeholder="0">
+                            </div>
+                            <div class="col-4">
+                                <label for="wall-tick" class="form-label">Tick</label>
+                                <input type="number" class="form-control" id="wall-tick" min="0" placeholder="0">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Gasse (Lane) -->
+                <div class="card category-card">
+                    <div class="card-header">Gasse (Lane)</div>
+                    <div class="card-body">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <label for="lane-pull" class="form-label">Ziehen</label>
+                                <input type="number" class="form-control" id="lane-pull" min="0" placeholder="0">
+                            </div>
+                            <div class="col-4">
+                                <label for="lane-push" class="form-label">Schieben</label>
+                                <input type="number" class="form-control" id="lane-push" min="0" placeholder="0">
+                            </div>
+                            <div class="col-4">
+                                <label for="lane-diagonal" class="form-label">Diagonal</label>
+                                <input type="number" class="form-control" id="lane-diagonal" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mitte (Middle) -->
+                <div class="card category-card">
+                    <div class="card-header">Mitte (Middle)</div>
+                    <div class="card-body">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <label for="mid-pull" class="form-label">Ziehen</label>
+                                <input type="number" class="form-control" id="mid-pull" min="0" placeholder="0">
+                            </div>
+                            <div class="col-4">
+                                <label for="mid-push" class="form-label">Schieben</label>
+                                <input type="number" class="form-control" id="mid-push" min="0" placeholder="0">
+                            </div>
+                            <div class="col-4">
+                                <label for="mid-direct" class="form-label">Direkt</label>
+                                <input type="number" class="form-control" id="mid-direct" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mb-5">
+                    <button type="submit" class="btn btn-primary" id="save-btn">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Speichern
+                    </button>
+                    <button type="button" class="btn btn-outline-danger ms-auto" id="clear-btn">
+                        <i class="fa-solid fa-trash me-1"></i> Alles löschen
+                    </button>
+                </div>
+
+            </form>
 
         </div>
     </div>
 
     <footer class="text-center py-3">
-        <small class="text-muted">Data is saved in your browser's local storage only – nothing leaves your device.</small>
+        <small class="text-muted">Daten werden nur im Browser-Speicher gespeichert – nichts verlässt das Gerät.</small>
     </footer>
+
+    <!-- Export Modal -->
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">
+                        <i class="fa-solid fa-file-csv me-2"></i>CSV Export
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schliessen"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">Gespeicherte Sessions als CSV – zum Einfügen in Excel.</p>
+                    <pre id="csv-output"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" id="copy-csv-btn">
+                        <i class="fa-solid fa-copy me-1"></i> Kopieren
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Schliessen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         (function () {
-            var STORAGE_KEY = 'foos-training-entries';
+            'use strict';
 
-            function loadEntries() {
+            var STORAGE_KEY = 'foos-3auf5-sessions';
+
+            /* Result field definitions – order determines CSV column order */
+            var FIELDS = [
+                { id: 'wall-pull',     label: 'Wand Ziehen'     },
+                { id: 'wall-push',     label: 'Wand Schieben'   },
+                { id: 'wall-tick',     label: 'Wand Tick'       },
+                { id: 'lane-pull',     label: 'Gasse Ziehen'    },
+                { id: 'lane-push',     label: 'Gasse Schieben'  },
+                { id: 'lane-diagonal', label: 'Gasse Diagonal'  },
+                { id: 'mid-pull',      label: 'Mitte Ziehen'    },
+                { id: 'mid-push',      label: 'Mitte Schieben'  },
+                { id: 'mid-direct',    label: 'Mitte Direkt'    }
+            ];
+
+            function loadSessions() {
                 try {
                     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
                 } catch (e) {
@@ -208,145 +338,137 @@
                 }
             }
 
-            function saveEntries(entries) {
+            function saveSessions(sessions) {
                 try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
                 } catch (e) {
-                    console.warn('foos: could not persist entries', e);
+                    console.warn('foos: could not persist sessions', e);
                 }
             }
 
-            function renderEntries(entries) {
-                var list = document.getElementById('entry-list');
-                var emptyMsg = document.getElementById('empty-msg');
-
-                // Remove all entry items (keep #empty-msg)
-                list.querySelectorAll('.entry-item').forEach(function (el) { el.remove(); });
-
-                if (entries.length === 0) {
-                    emptyMsg.style.display = '';
-                    return;
-                }
-                emptyMsg.style.display = 'none';
-
-                // Show newest first
-                var sorted = entries.slice().sort(function (a, b) {
-                    return b.date.localeCompare(a.date);
+            function generateCsv(sessions) {
+                var headers = ['Datum', 'Tisch', 'Satzgrösse'].concat(
+                    FIELDS.map(function (f) { return f.label; })
+                );
+                var lines = [headers.join(';')];
+                var sorted = sessions.slice().sort(function (a, b) {
+                    return a.date.localeCompare(b.date);
                 });
-
-                sorted.forEach(function (entry) {
-                    var item = document.createElement('div');
-                    item.className = 'list-group-item entry-item d-flex justify-content-between align-items-start';
-
-                    var left = document.createElement('div');
-                    var dateSpan = document.createElement('span');
-                    dateSpan.className = 'entry-date me-2';
-                    dateSpan.textContent = entry.date;
-                    left.appendChild(dateSpan);
-
-                    var badge = document.createElement('span');
-                    badge.className = 'badge bg-secondary me-2';
-                    badge.textContent = entry.type || '—';
-                    left.appendChild(badge);
-
-                    if (entry.duration) {
-                        var dur = document.createElement('span');
-                        dur.className = 'me-1 text-muted small';
-                        dur.textContent = entry.duration + ' min';
-                        left.appendChild(dur);
-                    }
-                    if (entry.distance) {
-                        var dist = document.createElement('span');
-                        dist.className = 'me-1 text-muted small';
-                        dist.textContent = entry.distance + ' km';
-                        left.appendChild(dist);
-                    }
-                    if (entry.notes) {
-                        var notes = document.createElement('div');
-                        notes.className = 'text-muted small fst-italic';
-                        notes.textContent = entry.notes;
-                        left.appendChild(notes);
-                    }
-
-                    var del = document.createElement('button');
-                    del.className = 'btn btn-sm btn-outline-danger ms-2';
-                    del.setAttribute('aria-label', 'Delete entry');
-                    del.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-                    del.dataset.entryId = entry.id;
-                    del.addEventListener('click', function () {
-                        var entryId = this.dataset.entryId;
-                        var current = loadEntries().filter(function (e) { return e.id !== entryId; });
-                        saveEntries(current);
-                        renderEntries(current);
-                        updateSummary(current);
+                sorted.forEach(function (s) {
+                    var row = [s.date, s.table, s.setSize];
+                    FIELDS.forEach(function (f) {
+                        row.push(s[f.id] != null ? s[f.id] : '');
                     });
-
-                    item.appendChild(left);
-                    item.appendChild(del);
-                    list.appendChild(item);
+                    lines.push(row.join(';'));
                 });
+                return lines.join('\n');
             }
 
-            function updateSummary(entries) {
-                var totalDuration = 0;
-                var totalDistance = 0;
-                entries.forEach(function (e) {
-                    totalDuration += parseFloat(e.duration) || 0;
-                    totalDistance += parseFloat(e.distance) || 0;
+            function resetResultFields() {
+                FIELDS.forEach(function (f) {
+                    document.getElementById(f.id).value = '';
                 });
-                document.getElementById('summary-sessions').textContent = entries.length;
-                document.getElementById('summary-duration').textContent = totalDuration >= 60
-                    ? (Math.floor(totalDuration / 60)) + 'h ' + (totalDuration % 60) + 'min'
-                    : totalDuration + ' min';
-                document.getElementById('summary-distance').textContent = Math.round(totalDistance * 10) / 10;
             }
 
             document.addEventListener('DOMContentLoaded', function () {
-                var entries = loadEntries();
-                renderEntries(entries);
-                updateSummary(entries);
 
-                // Pre-fill date with today
-                var dateInput = document.getElementById('entry-date');
-                dateInput.value = new Date().toISOString().slice(0, 10);
+                /* Pre-fill date with today */
+                document.getElementById('session-date').value = new Date().toISOString().slice(0, 10);
 
-                document.getElementById('training-form').addEventListener('submit', function (e) {
+                /* Save session */
+                document.getElementById('session-form').addEventListener('submit', function (e) {
                     e.preventDefault();
-                    var date = document.getElementById('entry-date').value;
-                    var type = document.getElementById('entry-type').value;
-                    var duration = document.getElementById('entry-duration').value;
-                    var distance = document.getElementById('entry-distance').value;
-                    var notes = document.getElementById('entry-notes').value.trim();
+
+                    var date = document.getElementById('session-date').value;
+                    var tableEl = document.querySelector('input[name="table-model"]:checked');
+                    var setSize = document.getElementById('set-size').value;
 
                     if (!date) {
-                        document.getElementById('entry-date').focus();
+                        document.getElementById('session-date').focus();
                         return;
                     }
-                    if (!type) {
-                        document.getElementById('entry-type').focus();
+                    if (!tableEl) {
+                        document.getElementById('tm-L').focus();
                         return;
                     }
 
-                    var current = loadEntries();
-                    current.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2), date: date, type: type, duration: duration, distance: distance, notes: notes });
-                    saveEntries(current);
-                    renderEntries(current);
-                    updateSummary(current);
+                    var session = {
+                        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+                        date: date,
+                        table: tableEl.value,
+                        setSize: setSize
+                    };
 
-                    // Reset form except date
-                    document.getElementById('entry-type').value = '';
-                    document.getElementById('entry-duration').value = '';
-                    document.getElementById('entry-distance').value = '';
-                    document.getElementById('entry-notes').value = '';
+                    FIELDS.forEach(function (f) {
+                        var raw = document.getElementById(f.id).value;
+                        session[f.id] = raw !== '' ? parseInt(raw, 10) : null;
+                    });
+
+                    var sessions = loadSessions();
+                    sessions.push(session);
+                    saveSessions(sessions);
+
+                    /* Reset result fields, keep date and table selection */
+                    resetResultFields();
+
+                    /* Brief save confirmation */
+                    var btn = document.getElementById('save-btn');
+                    var orig = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Gespeichert!';
+                    btn.disabled = true;
+                    setTimeout(function () {
+                        btn.innerHTML = orig;
+                        btn.disabled = false;
+                    }, 1500);
                 });
 
-                document.getElementById('clear-all').addEventListener('click', function () {
-                    if (confirm('Delete all training entries?')) {
-                        saveEntries([]);
-                        renderEntries([]);
-                        updateSummary([]);
+                /* Clear all sessions */
+                document.getElementById('clear-btn').addEventListener('click', function () {
+                    if (confirm('Alle gespeicherten Sessions löschen?')) {
+                        saveSessions([]);
                     }
                 });
+
+                /* Open export modal and populate CSV */
+                document.getElementById('export-btn').addEventListener('click', function () {
+                    var sessions = loadSessions();
+                    document.getElementById('csv-output').textContent = generateCsv(sessions);
+                    new bootstrap.Modal(document.getElementById('exportModal')).show();
+                });
+
+                /* Copy CSV to clipboard */
+                document.getElementById('copy-csv-btn').addEventListener('click', function () {
+                    var text = document.getElementById('csv-output').textContent;
+                    var btn = document.getElementById('copy-csv-btn');
+                    var orig = btn.innerHTML;
+
+                    function showCopied() {
+                        btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Kopiert!';
+                        setTimeout(function () { btn.innerHTML = orig; }, 1800);
+                    }
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(showCopied).catch(function () {
+                            fallbackCopy(text);
+                            showCopied();
+                        });
+                    } else {
+                        fallbackCopy(text);
+                        showCopied();
+                    }
+                });
+
+                function fallbackCopy(text) {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (ex) { /* ignore */ }
+                    document.body.removeChild(ta);
+                }
+
             });
         }());
     </script>
