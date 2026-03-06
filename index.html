@@ -44,7 +44,6 @@
     <meta property="og:type" content="website">
 
     <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="./css/animate.css" rel="stylesheet" type="text/css">
     <link href="./css/intro.css" rel="stylesheet" type="text/css">
     <link href="./css/travel.css" rel="stylesheet" type="text/css">
     <link href="./css/about.css" rel="stylesheet" type="text/css">
@@ -52,6 +51,7 @@
     <link href="./css/footer.css" rel="stylesheet" type="text/css">
     <link href="./css/phgamper.css" rel="stylesheet" type="text/css">
     <link href="./css/darkmode.css" rel="stylesheet" type="text/css">
+    <link href="./css/impressum.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-md-8 offset-md-2">
                         <a href="#intro" class="page-scroll">
-                            <span class="fa-4x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>
+                            <span class="fa-4x"> <i class="fa-solid fa-circle-chevron-down"></i> </span>
                         </a>
                     </div>
                 </div>
@@ -217,20 +217,9 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <!--div class="row">
-                                    <div class="col-sm-1 text-center align-middle">
-                                        <span><i class="fa fa-2x fa-home wow bounceIn animated" data-wow-delay=".1s"
-                                                style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;"></i></span>
-                                    </div>
-                                    <div class="col-sm-10 align-middle">
-                                        <span> <a href="https://phgamper.ch/" target="_blank">https://phgamper.ch</a>
-                                        </span>
-                                    </div>
-                                </div-->
                                 <div class="row">
                                     <div class="col-1 text-center align-middle">
-                                        <span><i class="fa-solid fa-2x fa-envelope wow bounceIn animated" data-wow-delay=".2s"
-                                                style="visibility: visible; animation-delay: 0.2s; animation-name: bounceIn;"></i></span>
+                                        <span><i class="fa-solid fa-2x fa-envelope scroll-reveal fade" style="transition-delay: 0.2s"></i></span>
                                     </div>
                                     <!-- obfuscate-->
                                         <div class="col-8 align-middle">
@@ -243,8 +232,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-1 text-center align-middle">
-                                        <span><i class="fa-brands fa-2x fa-github wow bounceIn animated" data-wow-delay=".3s"
-                                                style="visibility: visible; animation-delay: 0.3s; animation-name: bounceIn;"></i></span>
+                                        <span><i class="fa-brands fa-2x fa-github scroll-reveal fade" style="transition-delay: 0.3s"></i></span>
                                     </div>
                                     <div class="col-8 align-middle">
                                         <span> <a href="https://github.com/phgamper"
@@ -253,9 +241,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-1 text-center align-middle">
-                                        <span><i class="fa-brands fa-2x fa-linkedin wow bounceIn animated"
-                                                data-wow-delay=".4s"
-                                                style="visibility: visible; animation-delay: 0.4s; animation-name: bounceIn;"></i></span>
+                                        <span><i class="fa-brands fa-2x fa-linkedin scroll-reveal fade" style="transition-delay: 0.4s"></i></span>
                                     </div>
                                     <div class="col-8 align-middle">
                                         <span> <a href="https://linkedin.com/in/phgamper"
@@ -273,7 +259,7 @@
                 <div class="row about" style="margin-bottom: 16px">
                     <div class="col-8 offset-2 text-center">
                         <a id="cv-toggle">
-                            <span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>
+                            <span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down"></i> </span>
                         </a>
                     </div>
                 </div>
@@ -572,7 +558,7 @@
                     <div class="footer-inner row">
                         <div class="col-md-8">
                             <p>maintained by <a href="#about" class="page-scroll">phgamper</a> | <a
-                                    href="/impressum.html">impressum</a></p>
+                                    href="#" data-bs-toggle="modal" data-bs-target="#impressumModal">imprint</a></p>
                         </div>
                         <div class="col-md-4">
                             <p class="float-end"><a href="#page-top" class="page-scroll">Back to top</a></p>
@@ -585,23 +571,65 @@
 
     <!-- JavaScript -->
     <script src="./js/prism.js"></script>
-    <script src="./js/wow.min.js"></script>
     <script src="./js/mdblog.js"></script>
     <script src="./js/minerva.js"></script>
-    <script src="./js/jquery.easing.min.js"></script>
     <script src="./js/grayscale.js"></script>
     <script>
         new bootstrap.Carousel(document.getElementById('travel-carousel'), {
             interval: 5000
         });
-        var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up animated"></i> </span>';
-        var expand = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down animated"></i> </span>';
+        var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up"></i> </span>';
+        var expand = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down"></i> </span>';
         $('#cv-toggle').on('click', function () {
             $('#cv-content').toggle(500);
             var expanded = $(this).data('expanded');
             $(this).data('expanded', !expanded).html(expanded ? expand : collapse);
         });
     </script>
+
+    <!-- Impressum Modal -->
+    <div class="modal fade" id="impressumModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 p-3 justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" data-bs-dismiss="modal">
+                    <h1>Haftungsausschluss</h1>
+                    <p>Der Autor übernimmt keinerlei Gewähr hinsichtlich der inhaltlichen Richtigkeit, Genauigkeit, Aktualität,
+                        Zuverlässigkeit und Vollständigkeit der Informationen.</p>
+                    <p>Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, welche aus dem Zugriff oder
+                        der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch
+                        technische Störungen entstanden sind, werden ausgeschlossen.</p>
+                    <p>Alle Angebote sind unverbindlich. Der Autor behält es sich ausdrücklich vor, Teile der Seiten oder das gesamte
+                        Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise
+                        oder endgültig einzustellen.</p>
+                    <p>&nbsp;</p>
+                    <h1>Haftung für Links</h1>
+                    <p>Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs Es wird jegliche
+                        Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene
+                        Gefahr des Nutzers oder der Nutzerin.</p>
+                    <p>&nbsp;</p>
+                    <h1>Urheberrechte</h1>
+                    <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf der Website gehören
+                        ausschliesslich <strong>Philipp Gamper</strong> oder den speziell genannten Rechtsinhabern. Für die Reproduktion jeglicher
+                        Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.</p>
+                    <p>&nbsp;</p>
+                    <h1>Datenschutz</h1>
+                    <p>Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und die datenschutzrechtlichen Bestimmungen des
+                        Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor
+                        Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen ein. Persönliche Daten werden streng
+                        vertraulich behandelt und weder an Dritte verkauft noch weiter gegeben.</p>
+                    <p>In enger Zusammenarbeit mit unseren Hosting-Providern bemühen wir uns, die Datenbanken so gut wie möglich vor
+                        fremden Zugriffen, Verlusten, Missbrauch oder vor Fälschung zu schützen.</p>
+                    <p>Beim Zugriff auf unsere Webseiten werden folgende Daten in Logfiles gespeichert: IP-Adresse, Datum, Uhrzeit,
+                        Browser-Anfrage und allg. übertragene Informationen zum Betriebssystem resp. Browser. Diese Nutzungsdaten bilden
+                        die Basis für statistische, anonyme Auswertungen, so dass Trends erkennbar sind, anhand derer wir unsere
+                        Angebote entsprechend verbessern können.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -35,6 +35,12 @@
 	text-transform: uppercase;
 }
 
+@media (min-width: 768px) {
+	#about .block h4, #cv .block h4 {
+		white-space: nowrap;
+	}
+}
+
 #cv .block p span {
 	text-transform: none;
 }
@@ -76,7 +82,7 @@
 }
 
 #about .container, #cv .container {
-    max-width: 960px;
+    max-width: 1200px;
 }
 
 @media (max-width : 767px) {

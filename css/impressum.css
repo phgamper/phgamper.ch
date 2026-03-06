@@ -1,3 +1,97 @@
+/* =========================================================
+   Impressum Modal
+   Fills the viewport with an even 64px margin on all four sides.
+   Bootstrap's modal z-index (1055) already exceeds the navbar's
+   (1030), so it naturally covers the navigation bar.
+   ========================================================= */
+
+#impressumModal .modal-dialog {
+    margin: 64px;
+    max-width: calc(100vw - 128px);
+    height: calc(100vh - 128px);
+}
+
+#impressumModal .modal-content,
+#impressumModal .modal-header {
+    border-radius: 0 !important;
+}
+
+#impressumModal .modal-content {
+    height: 100%;
+    max-height: 100%;
+    --bs-modal-border-radius: 0;
+    --bs-modal-inner-border-radius: 0;
+}
+
+#impressumModal .modal-body {
+    cursor: pointer;
+}
+
+#impressumModal h1 {
+    font-size: 1.35rem;
+    margin: 1rem 0 0.4rem;
+}
+
+#impressumModal p {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+}
+
+/* On narrow screens use a smaller but still comfortable gap */
+@media screen and (max-width: 767px) {
+    #impressumModal .modal-dialog {
+        margin: 16px;
+        max-width: calc(100vw - 32px);
+        height: calc(100vh - 32px);
+    }
+}
+
+/* Section styles kept for the standalone impressum.html fallback page */
+#impressum:before {
+    border-bottom: 68px solid rgba(255, 255, 255, 1.0);
+    border-left: 768px solid transparent;
+}
+
+#impressum {
+    overflow-x: hidden;
+    scroll-margin-top: 68px;
+}
+
+@media screen and (max-width: 767px) {
+    #impressum {
+        scroll-margin-top: 56px;
+    }
+}
+
+#impressum:before {
+    visibility: visible;
+}
+
+/* Responsive */
+@media screen and (min-width: 768px) {
+    #impressum:before {
+        border-left: 960px solid transparent;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    #impressum:before {
+        border-left: 1280px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #impressum:before {
+        border-left: 1360px solid transparent;
+    }
+}
+
+@media screen and (min-width: 1360px) {
+    #impressum:before {
+        border-left: 1920px solid transparent;
+    }
+}
+
 #impressum .onepager-item {
     background: rgba(255,255,255,1.0);
 }
