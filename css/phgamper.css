@@ -91,7 +91,12 @@ a:hover {
 
 .navbar-nav {
     font-size: 1.25em;
-    flex-direction: row;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        flex-direction: row;
+    }
 }
 
 /* Content */
@@ -150,13 +155,6 @@ a:hover {
     vertical-align: middle;
     padding: 4px 0px;
 }
-
-/* borrowed from grayscale */
-/*!
- * Start Bootstrap - Grayscale v1.1.0 (http://startbootstrap.com/template-overviews/grayscale)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
 
 .intro {
     display: table;

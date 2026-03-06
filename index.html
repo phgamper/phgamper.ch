@@ -69,13 +69,18 @@
 
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom fixed-top navbar-expand">
+    <nav class="navbar navbar-custom fixed-top navbar-expand-md">
             <button id="darkmode-toggle" aria-label="Toggle dark mode"><span class="fa-stack"><i class="fa-solid fa-circle fa-stack-2x"></i><i class="fa-solid fa-moon fa-stack-1x fa-inverse" id="darkmode-icon"></i></span></button>
-            <div id="navbar-main" class="navbar-nav ms-auto" role="navigation">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <div class="navbar-nav ms-auto" role="navigation">
                     <a class="nav-item nav-link page-scroll" href="#intro">Intro</a>
                     <a class="nav-item nav-link page-scroll" href="#travel">Carousel</a>
                     <a class="nav-item nav-link page-scroll" href="#about">About</a>
                     <a class="nav-item nav-link navbar-brand page-scroll" href="#page-top" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+                </div>
             </div>
     </nav>
     <header class="intro">
@@ -573,10 +578,24 @@
     <script src="./js/prism.js"></script>
     <script src="./js/mdblog.js"></script>
     <script src="./js/minerva.js"></script>
-    <script src="./js/grayscale.js"></script>
     <script>
         new bootstrap.Carousel(document.getElementById('travel-carousel'), {
             interval: 5000
+        });
+
+        // Collapse navbar: add opaque background once the page is scrolled past 50 px
+        function collapseNavbar() {
+            document.querySelector('.navbar.fixed-top').classList.toggle('top-nav-collapse', window.scrollY > 50);
+        }
+        window.addEventListener('scroll', collapseNavbar);
+        collapseNavbar();
+
+        // Auto-close mobile navbar when a nav link is clicked
+        var navCollapseEl = document.getElementById('navbar-main');
+        navCollapseEl.querySelectorAll('.nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                bootstrap.Collapse.getOrCreateInstance(navCollapseEl, { toggle: false }).hide();
+            });
         });
         var collapse = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-up"></i> </span>';
         var expand = '<span class="fa-3x"> <i class="fa-solid fa-circle-chevron-down"></i> </span>';
