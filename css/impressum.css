@@ -5,6 +5,13 @@
 
 #impressum {
     overflow-x: hidden;
+    scroll-margin-top: 68px;
+}
+
+@media screen and (max-width: 767px) {
+    #impressum {
+        scroll-margin-top: 56px;
+    }
 }
 
 #impressum:before {
