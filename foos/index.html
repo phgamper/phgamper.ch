@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -106,6 +106,17 @@
             min-height: 150px;
         }
 
+        /* Compact number inputs */
+        .num-input {
+            max-width: 72px;
+        }
+
+        .num-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
         @media (max-width: 767.98px) {
             .foos-wrapper {
                 padding-top: 64px;
@@ -143,7 +154,7 @@
                 <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <div>
                         <h1 class="mb-0">3 auf 5 – Tracker</h1>
-                        <p class="text-muted mb-0 small">Alle Daten werden lokal im Browser gespeichert.</p>
+                        <p class="text-muted mb-0 small">All data is stored locally in your browser.</p>
                     </div>
                     <button class="btn btn-outline-secondary" id="export-btn" type="button">
                         <i class="fa-solid fa-file-export me-1"></i> Export CSV
@@ -161,12 +172,12 @@
                         <div class="row g-3">
 
                             <div class="col-12 col-sm-4">
-                                <label for="session-date" class="form-label">Datum</label>
+                                <label for="session-date" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="session-date" required>
                             </div>
 
                             <div class="col-12 col-sm-5">
-                                <label class="form-label d-block">Tischmodell</label>
+                                <label class="form-label d-block">Table model</label>
                                 <div class="d-flex flex-wrap gap-2">
                                     <div class="form-check form-check-inline me-0">
                                         <input class="form-check-input" type="radio" name="table-model" id="tm-L" value="L" required>
@@ -192,7 +203,7 @@
                             </div>
 
                             <div class="col-12 col-sm-3">
-                                <label for="set-size" class="form-label">Satzgrösse</label>
+                                <label for="set-size" class="form-label">Set size</label>
                                 <select class="form-select" id="set-size" required>
                                     <option value="10">10</option>
                                     <option value="25" selected>25</option>
@@ -204,64 +215,80 @@
                     </div>
                 </div>
 
-                <!-- Wand (Wall) -->
+                <!-- Wall -->
                 <div class="card category-card">
-                    <div class="card-header">Wand (Wall)</div>
+                    <div class="card-header">Wall</div>
                     <div class="card-body">
-                        <div class="row g-2">
-                            <div class="col-4">
-                                <label for="wall-pull" class="form-label">Ziehen</label>
-                                <input type="number" class="form-control" id="wall-pull" min="0" placeholder="0">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="wall-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="wall-lp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="wall-push" class="form-label">Schieben</label>
-                                <input type="number" class="form-control" id="wall-push" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="wall-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="wall-sp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="wall-tick" class="form-label">Tick</label>
-                                <input type="number" class="form-control" id="wall-tick" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="wall-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="wall-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="wall-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="wall-spu" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Gasse (Lane) -->
+                <!-- Lane -->
                 <div class="card category-card">
-                    <div class="card-header">Gasse (Lane)</div>
+                    <div class="card-header">Lane</div>
                     <div class="card-body">
-                        <div class="row g-2">
-                            <div class="col-4">
-                                <label for="lane-pull" class="form-label">Ziehen</label>
-                                <input type="number" class="form-control" id="lane-pull" min="0" placeholder="0">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="lane-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="lane-lp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="lane-push" class="form-label">Schieben</label>
-                                <input type="number" class="form-control" id="lane-push" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="lane-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="lane-sp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="lane-diagonal" class="form-label">Diagonal</label>
-                                <input type="number" class="form-control" id="lane-diagonal" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="lane-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="lane-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="lane-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="lane-spu" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mitte (Middle) -->
+                <!-- Middle -->
                 <div class="card category-card">
-                    <div class="card-header">Mitte (Middle)</div>
+                    <div class="card-header">Middle</div>
                     <div class="card-body">
-                        <div class="row g-2">
-                            <div class="col-4">
-                                <label for="mid-pull" class="form-label">Ziehen</label>
-                                <input type="number" class="form-control" id="mid-pull" min="0" placeholder="0">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="num-group">
+                                <label for="mid-lp" class="form-label mb-1">Long Pull</label>
+                                <input type="number" class="form-control num-input" id="mid-lp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="mid-push" class="form-label">Schieben</label>
-                                <input type="number" class="form-control" id="mid-push" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="mid-sp" class="form-label mb-1">Short Pull</label>
+                                <input type="number" class="form-control num-input" id="mid-sp" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
-                            <div class="col-4">
-                                <label for="mid-direct" class="form-label">Direkt</label>
-                                <input type="number" class="form-control" id="mid-direct" min="0" placeholder="0">
+                            <div class="num-group">
+                                <label for="mid-lpu" class="form-label mb-1">Long Push</label>
+                                <input type="number" class="form-control num-input" id="mid-lpu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-spu" class="form-label mb-1">Short Push</label>
+                                <input type="number" class="form-control num-input" id="mid-spu" min="0" step="1" placeholder="0" inputmode="numeric">
+                            </div>
+                            <div class="num-group">
+                                <label for="mid-straight" class="form-label mb-1">Straight</label>
+                                <input type="number" class="form-control num-input" id="mid-straight" min="0" step="1" placeholder="0" inputmode="numeric">
                             </div>
                         </div>
                     </div>
@@ -269,10 +296,10 @@
 
                 <div class="d-flex gap-2 mb-5">
                     <button type="submit" class="btn btn-primary" id="save-btn">
-                        <i class="fa-solid fa-floppy-disk me-1"></i> Speichern
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Save
                     </button>
                     <button type="button" class="btn btn-outline-danger ms-auto" id="clear-btn">
-                        <i class="fa-solid fa-trash me-1"></i> Alles löschen
+                        <i class="fa-solid fa-trash me-1"></i> Clear all
                     </button>
                 </div>
 
@@ -282,7 +309,7 @@
     </div>
 
     <footer class="text-center py-3">
-        <small class="text-muted">Daten werden nur im Browser-Speicher gespeichert – nichts verlässt das Gerät.</small>
+        <small class="text-muted">Data is stored in your browser's local storage only – nothing leaves your device.</small>
     </footer>
 
     <!-- Export Modal -->
@@ -293,18 +320,18 @@
                     <h5 class="modal-title" id="exportModalLabel">
                         <i class="fa-solid fa-file-csv me-2"></i>CSV Export
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schliessen"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted small mb-2">Gespeicherte Sessions als CSV – zum Einfügen in Excel.</p>
+                    <p class="text-muted small mb-2">Stored sessions as CSV – paste directly into Excel.</p>
                     <pre id="csv-output"></pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" id="copy-csv-btn">
-                        <i class="fa-solid fa-copy me-1"></i> Kopieren
+                        <i class="fa-solid fa-copy me-1"></i> Copy
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Schliessen
+                        Close
                     </button>
                 </div>
             </div>
@@ -315,19 +342,23 @@
         (function () {
             'use strict';
 
-            var STORAGE_KEY = 'foos-3auf5-sessions';
+            var STORAGE_KEY = 'foos-3auf5-v2';
 
             /* Result field definitions – order determines CSV column order */
             var FIELDS = [
-                { id: 'wall-pull',     label: 'Wand Ziehen'     },
-                { id: 'wall-push',     label: 'Wand Schieben'   },
-                { id: 'wall-tick',     label: 'Wand Tick'       },
-                { id: 'lane-pull',     label: 'Gasse Ziehen'    },
-                { id: 'lane-push',     label: 'Gasse Schieben'  },
-                { id: 'lane-diagonal', label: 'Gasse Diagonal'  },
-                { id: 'mid-pull',      label: 'Mitte Ziehen'    },
-                { id: 'mid-push',      label: 'Mitte Schieben'  },
-                { id: 'mid-direct',    label: 'Mitte Direkt'    }
+                { id: 'wall-lp',     label: 'Wall Long Pull'    },
+                { id: 'wall-sp',     label: 'Wall Short Pull'   },
+                { id: 'wall-lpu',    label: 'Wall Long Push'    },
+                { id: 'wall-spu',    label: 'Wall Short Push'   },
+                { id: 'lane-lp',     label: 'Lane Long Pull'    },
+                { id: 'lane-sp',     label: 'Lane Short Pull'   },
+                { id: 'lane-lpu',    label: 'Lane Long Push'    },
+                { id: 'lane-spu',    label: 'Lane Short Push'   },
+                { id: 'mid-lp',      label: 'Mid Long Pull'     },
+                { id: 'mid-sp',      label: 'Mid Short Pull'    },
+                { id: 'mid-lpu',     label: 'Mid Long Push'     },
+                { id: 'mid-spu',     label: 'Mid Short Push'    },
+                { id: 'mid-straight', label: 'Mid Straight'     }
             ];
 
             function loadSessions() {
@@ -347,7 +378,7 @@
             }
 
             function generateCsv(sessions) {
-                var headers = ['Datum', 'Tisch', 'Satzgrösse'].concat(
+                var headers = ['Date', 'Table', 'Set size'].concat(
                     FIELDS.map(function (f) { return f.label; })
                 );
                 var lines = [headers.join(';')];
@@ -414,7 +445,7 @@
                     /* Brief save confirmation */
                     var btn = document.getElementById('save-btn');
                     var orig = btn.innerHTML;
-                    btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Gespeichert!';
+                    btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Saved!';
                     btn.disabled = true;
                     setTimeout(function () {
                         btn.innerHTML = orig;
@@ -424,7 +455,7 @@
 
                 /* Clear all sessions */
                 document.getElementById('clear-btn').addEventListener('click', function () {
-                    if (confirm('Alle gespeicherten Sessions löschen?')) {
+                    if (confirm('Delete all stored sessions?')) {
                         saveSessions([]);
                     }
                 });
@@ -443,7 +474,7 @@
                     var orig = btn.innerHTML;
 
                     function showCopied() {
-                        btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Kopiert!';
+                        btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Copied!';
                         setTimeout(function () { btn.innerHTML = orig; }, 1800);
                     }
 
