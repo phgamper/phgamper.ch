@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="NOINDEX,NOFOLLOW">
+    <meta name="author" content="Philipp Gamper">
+    <title>Training Tracker – phgamper.ch</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/phgamper.css" rel="stylesheet" type="text/css">
+    <link href="../css/darkmode.css" rel="stylesheet" type="text/css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script src="../js/darkmode.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <style>
+        body {
+            background: none;
+            background-color: var(--bs-body-bg);
+        }
+
+        .foos-wrapper {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .foos-card {
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .entry-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .entry-item {
+            font-size: 0.9rem;
+        }
+
+        .entry-item .entry-date {
+            font-weight: 600;
+            min-width: 130px;
+        }
+
+        @media (max-width: 767.98px) {
+            .foos-wrapper {
+                padding-top: 64px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom fixed-top navbar-expand-md">
+        <button id="darkmode-toggle" aria-label="Toggle dark mode"><span class="fa-stack"><i class="fa-solid fa-circle fa-stack-2x"></i><i class="fa-solid fa-moon fa-stack-1x fa-inverse" id="darkmode-icon"></i></span></button>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <div class="navbar-nav ms-auto" role="navigation">
+                <a class="nav-item nav-link navbar-brand" href="/" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="foos-wrapper">
+        <div class="container">
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1>Training Tracker</h1>
+                    <p class="text-muted">Log your training sessions. All data is stored locally in your browser.</p>
+                </div>
+            </div>
+
+            <!-- Log new entry -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card foos-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Log a Session</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="training-form" novalidate>
+
+                                <div class="mb-3">
+                                    <label for="entry-date" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="entry-date" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="entry-type" class="form-label">Activity type</label>
+                                    <select class="form-select" id="entry-type" required>
+                                        <option value="">— select —</option>
+                                        <option value="run">Run</option>
+                                        <option value="bike">Bike</option>
+                                        <option value="swim">Swim</option>
+                                        <option value="gym">Gym</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="entry-duration" class="form-label">Duration (min)</label>
+                                    <input type="number" class="form-control" id="entry-duration" min="1" placeholder="e.g. 45">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="entry-distance" class="form-label">Distance (km) <span class="text-muted">(optional)</span></label>
+                                    <input type="number" class="form-control" id="entry-distance" min="0" step="0.1" placeholder="e.g. 10.5">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="entry-notes" class="form-label">Notes <span class="text-muted">(optional)</span></label>
+                                    <textarea class="form-control" id="entry-notes" rows="2" placeholder="How did it feel?"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save entry</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="col-lg-6">
+                    <div class="card foos-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Recent entries</h5>
+                            <button id="clear-all" class="btn btn-sm btn-outline-danger" title="Delete all entries">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="entry-list" class="entry-list list-group list-group-flush">
+                                <div class="list-group-item text-muted fst-italic" id="empty-msg">No entries yet.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card foos-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Summary (all time)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="fs-4 fw-bold" id="summary-sessions">0</div>
+                                    <div class="text-muted small">Sessions</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="fs-4 fw-bold" id="summary-duration">0</div>
+                                    <div class="text-muted small">Total min</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="fs-4 fw-bold" id="summary-distance">0</div>
+                                    <div class="text-muted small">Total km</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-3">
+        <small class="text-muted">Data is saved in your browser's local storage only – nothing leaves your device.</small>
+    </footer>
+
+    <script>
+        (function () {
+            var STORAGE_KEY = 'foos-training-entries';
+
+            function loadEntries() {
+                try {
+                    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveEntries(entries) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+                } catch (e) {
+                    console.warn('foos: could not persist entries', e);
+                }
+            }
+
+            function renderEntries(entries) {
+                var list = document.getElementById('entry-list');
+                var emptyMsg = document.getElementById('empty-msg');
+
+                // Remove all entry items (keep #empty-msg)
+                list.querySelectorAll('.entry-item').forEach(function (el) { el.remove(); });
+
+                if (entries.length === 0) {
+                    emptyMsg.style.display = '';
+                    return;
+                }
+                emptyMsg.style.display = 'none';
+
+                // Show newest first
+                var sorted = entries.slice().sort(function (a, b) {
+                    return b.date.localeCompare(a.date);
+                });
+
+                sorted.forEach(function (entry) {
+                    var item = document.createElement('div');
+                    item.className = 'list-group-item entry-item d-flex justify-content-between align-items-start';
+
+                    var left = document.createElement('div');
+                    var dateSpan = document.createElement('span');
+                    dateSpan.className = 'entry-date me-2';
+                    dateSpan.textContent = entry.date;
+                    left.appendChild(dateSpan);
+
+                    var badge = document.createElement('span');
+                    badge.className = 'badge bg-secondary me-2';
+                    badge.textContent = entry.type || '—';
+                    left.appendChild(badge);
+
+                    if (entry.duration) {
+                        var dur = document.createElement('span');
+                        dur.className = 'me-1 text-muted small';
+                        dur.textContent = entry.duration + ' min';
+                        left.appendChild(dur);
+                    }
+                    if (entry.distance) {
+                        var dist = document.createElement('span');
+                        dist.className = 'me-1 text-muted small';
+                        dist.textContent = entry.distance + ' km';
+                        left.appendChild(dist);
+                    }
+                    if (entry.notes) {
+                        var notes = document.createElement('div');
+                        notes.className = 'text-muted small fst-italic';
+                        notes.textContent = entry.notes;
+                        left.appendChild(notes);
+                    }
+
+                    var del = document.createElement('button');
+                    del.className = 'btn btn-sm btn-outline-danger ms-2';
+                    del.setAttribute('aria-label', 'Delete entry');
+                    del.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                    del.dataset.entryId = entry.id;
+                    del.addEventListener('click', function () {
+                        var entryId = this.dataset.entryId;
+                        var current = loadEntries().filter(function (e) { return e.id !== entryId; });
+                        saveEntries(current);
+                        renderEntries(current);
+                        updateSummary(current);
+                    });
+
+                    item.appendChild(left);
+                    item.appendChild(del);
+                    list.appendChild(item);
+                });
+            }
+
+            function updateSummary(entries) {
+                var totalDuration = 0;
+                var totalDistance = 0;
+                entries.forEach(function (e) {
+                    totalDuration += parseFloat(e.duration) || 0;
+                    totalDistance += parseFloat(e.distance) || 0;
+                });
+                document.getElementById('summary-sessions').textContent = entries.length;
+                document.getElementById('summary-duration').textContent = totalDuration >= 60
+                    ? (Math.floor(totalDuration / 60)) + 'h ' + (totalDuration % 60) + 'min'
+                    : totalDuration + ' min';
+                document.getElementById('summary-distance').textContent = Math.round(totalDistance * 10) / 10;
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var entries = loadEntries();
+                renderEntries(entries);
+                updateSummary(entries);
+
+                // Pre-fill date with today
+                var dateInput = document.getElementById('entry-date');
+                dateInput.value = new Date().toISOString().slice(0, 10);
+
+                document.getElementById('training-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var date = document.getElementById('entry-date').value;
+                    var type = document.getElementById('entry-type').value;
+                    var duration = document.getElementById('entry-duration').value;
+                    var distance = document.getElementById('entry-distance').value;
+                    var notes = document.getElementById('entry-notes').value.trim();
+
+                    if (!date) {
+                        document.getElementById('entry-date').focus();
+                        return;
+                    }
+                    if (!type) {
+                        document.getElementById('entry-type').focus();
+                        return;
+                    }
+
+                    var current = loadEntries();
+                    current.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2), date: date, type: type, duration: duration, distance: distance, notes: notes });
+                    saveEntries(current);
+                    renderEntries(current);
+                    updateSummary(current);
+
+                    // Reset form except date
+                    document.getElementById('entry-type').value = '';
+                    document.getElementById('entry-duration').value = '';
+                    document.getElementById('entry-distance').value = '';
+                    document.getElementById('entry-notes').value = '';
+                });
+
+                document.getElementById('clear-all').addEventListener('click', function () {
+                    if (confirm('Delete all training entries?')) {
+                        saveEntries([]);
+                        renderEntries([]);
+                        updateSummary([]);
+                    }
+                });
+            });
+        }());
+    </script>
+
+</body>
+
+</html>
