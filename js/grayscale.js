@@ -16,14 +16,15 @@ function collapseNavbar() {
 $(window).scroll(collapseNavbar);
 $(document).ready(collapseNavbar);
 
-// jQuery for page scrolling feature - requires jQuery Easing plugin
+// jQuery for page scrolling feature - uses native smooth scrolling
 $(function() {
     $('a.page-scroll').on('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 1500, 'easeInOutCubic');
         event.preventDefault();
+        var target = $(this).attr('href');
+        var $target = $(target);
+        if ($target.length) {
+            $target[0].scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
 
