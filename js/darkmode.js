@@ -22,7 +22,7 @@
     function updateIcon(theme) {
         var icon = document.getElementById('darkmode-icon');
         if (icon) {
-            icon.className = theme === DARK ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            icon.className = theme === DARK ? 'fa-solid fa-sun fa-stack-1x fa-inverse' : 'fa-solid fa-moon fa-stack-1x fa-inverse';
         }
         var toggle = document.getElementById('darkmode-toggle');
         if (toggle) {

@@ -90,7 +90,8 @@
 
 /* =========================================================
    Dark-mode toggle button
-   Styled to match the existing nav links / home button.
+   Styled as a filled circle (fa-stack) to match the scroll-down
+   chevron buttons used throughout the page.
    ========================================================= */
 #darkmode-toggle {
     background: none;
@@ -106,6 +107,11 @@
     transition: color 0.5s ease-in-out;
 }
 
+/* Scale the fa-stack so the circle matches the nav icon size */
+#darkmode-toggle .fa-stack {
+    font-size: 0.65em;
+}
+
 #darkmode-toggle:hover {
     color: #888888;
 }
@@ -116,6 +122,13 @@
 
 [data-bs-theme="dark"] #darkmode-toggle:hover {
     color: #cccccc;
+}
+
+/* When the navbar has its dark opaque background (scrolled), the toggle circle
+   turns white. Override --fa-inverse so the inner icon is dark on that white
+   circle rather than invisible (fa-inverse defaults to #fff). */
+[data-bs-theme="dark"] .navbar-custom.top-nav-collapse #darkmode-toggle {
+    --fa-inverse: rgba(30, 30, 30, 0.95);
 }
 
 @media screen and (max-width: 767px) {
