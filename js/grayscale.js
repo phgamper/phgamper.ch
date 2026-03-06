@@ -16,18 +16,6 @@ function collapseNavbar() {
 $(window).scroll(collapseNavbar);
 $(document).ready(collapseNavbar);
 
-// jQuery for page scrolling feature - uses native smooth scrolling
-$(function() {
-    $('a.page-scroll').on('click', function(event) {
-        event.preventDefault();
-        var target = $(this).attr('href');
-        var $target = $(target);
-        if ($target.length) {
-            $target[0].scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
-
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').on('click', function() {
     if ($(this).attr('class') !== 'dropdown-toggle active' && $(this).attr('class') !== 'dropdown-toggle') {
