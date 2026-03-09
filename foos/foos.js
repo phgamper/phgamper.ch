@@ -80,12 +80,14 @@
     function updateScoreboard() {
         var elA = document.querySelector('[data-sb-sets][data-team="a"]');
         var elB = document.querySelector('[data-sb-sets][data-team="b"]');
+        // Always show the count (including 0) so the scoreboard is non-empty from the start.
         if (elA) elA.textContent = setsA;
         if (elB) elB.textContent = setsB;
 
         for (var s = 1; s <= 5; s++) {
             var cA = document.querySelector('[data-sb-goals][data-set="' + s + '"][data-team="a"]');
             var cB = document.querySelector('[data-sb-goals][data-set="' + s + '"][data-team="b"]');
+            // Only show sets that are finished or currently in progress; hide future sets.
             var show = (s <= currentSet);
             if (cA) { cA.style.visibility = show ? '' : 'hidden'; cA.textContent = show ? goalsA[s - 1] : ''; }
             if (cB) { cB.style.visibility = show ? '' : 'hidden'; cB.textContent = show ? goalsB[s - 1] : ''; }
@@ -167,6 +169,9 @@
 
     // ── Event recording ──────────────────────────────────────────
 
+    // auto=true marks events generated automatically by the engine (e.g. post-goal
+    // ball placement) rather than by a direct user click.  Undo skips auto events
+    // transparently so one press always undoes one logical action.
     function recordClick(cellEl, auto) {
         if (matchOver) return;
 
@@ -301,7 +306,11 @@
             var vA = map[key][0], vB = map[key][1];
             document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (el) {
                 if (el.classList.contains('foos-ana-val')) {
-                    el.textContent = el.getAttribute('data-team') === 'a' ? vA : vB;
+                    var team  = el.getAttribute('data-team');
+                    var val   = team === 'a' ? vA : vB;
+                    var other = team === 'a' ? vB : vA;
+                    el.textContent  = val;
+                    el.style.fontWeight = (val > other) ? 'bold' : '';
                 } else if (el.classList.contains('foos-ana-bar')) {
                     setBar(el, vA, vB);
                 }

@@ -135,7 +135,7 @@ footer #darkmode-toggle {
     border: 1px solid var(--bs-border-color);
     background-color: var(--bs-tertiary-bg);
     font-size: 1.15rem;
-    font-weight: 800;
+    font-weight: bold;
 }
 
 /* Individual set scores: same size as sets cell, grey background matching the playfield */
@@ -243,7 +243,7 @@ footer #darkmode-toggle {
     min-height: 0;
 }
 
-/* Bidirectional bar: Team A bar (left) | Team B bar (right)
+/* Bidirectional bar: Team B bar (left) | Team A bar (right)
    Both bars start at 50/50; JS will later adjust flex values for real data */
 .foos-ana-bar {
     display: flex;
@@ -254,22 +254,22 @@ footer #darkmode-toggle {
 .foos-bar-a,
 .foos-bar-b {
     flex: 1;
-    height: 50%;
+    height: 75%;
     min-height: 6px;
 }
 
-/* Team A = white/light bar */
+/* Team A = white/light bar – RIGHT side */
 .foos-bar-a {
     background-color: #d0d0d0;
     border: 1px solid #aaaaaa;
-    border-right: none;
+    border-left: none;
 }
 
-/* Team B = black/dark bar */
+/* Team B = black/dark bar – LEFT side */
 .foos-bar-b {
     background-color: #555555;
     border: 1px solid #333333;
-    border-left: 2px solid #888888; /* centre divider */
+    border-right: 2px solid #888888; /* centre divider */
 }
 
 [data-bs-theme="dark"] .foos-bar-a {
@@ -280,7 +280,7 @@ footer #darkmode-toggle {
 [data-bs-theme="dark"] .foos-bar-b {
     background-color: #707070;
     border-color: #555555;
-    border-left-color: #aaaaaa;
+    border-right-color: #aaaaaa;
 }
 
 /* Stat description label */
