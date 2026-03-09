@@ -18,6 +18,7 @@
     var ROD_3 = 0, ROD_5 = 1, ROD_2 = 2;
     var GOALS_TO_WIN_SET   = 5;
     var SETS_TO_WIN_MATCH  = 3;
+    var STORAGE_KEY        = 'foos-tracker-v1';
 
     // ── Game state ───────────────────────────────────────────────
     var eventHistory    = [];
@@ -38,6 +39,25 @@
         return null;
     }
 
+    function rodToAttr(rod) {
+        if (rod === ROD_3) return '3';
+        if (rod === ROD_5) return '5';
+        if (rod === ROD_2) return '2';
+        return null;
+    }
+
+    // Reconstruct the DOM cell element from a plain-object event (used after localStorage restore).
+    function findCell(e) {
+        if (e.type === 'goal') {
+            return document.querySelector('[data-cell-type="goal"][data-team="' + (e.teamA ? 'a' : 'b') + '"]');
+        }
+        var rodStr = rodToAttr(e.rod);
+        if (!rodStr) return null;
+        return document.querySelector(
+            '[data-cell-type="' + e.type + '"][data-rod="' + rodStr + '"][data-team="' + (e.teamA ? 'a' : 'b') + '"]'
+        );
+    }
+
     // Return the last rod-or-grey event before any goal, or null.
     // A goal resets the chain (ball is back in play from a fresh placement).
     function lastMeaningful() {
@@ -47,6 +67,70 @@
             if (e.type === 'rod' || e.type === 'grey') return e;
         }
         return null;
+    }
+
+    // ── Persistence ──────────────────────────────────────────────
+
+    // Serialise all mutable state (without DOM references) to localStorage.
+    function saveState() {
+        try {
+            var data = {
+                events: eventHistory.map(function (e) {
+                    return {
+                        timestamp:    e.timestamp,
+                        type:         e.type,
+                        rod:          e.rod,
+                        teamA:        e.teamA,
+                        isTransition: e.isTransition,
+                        set:          e.set,
+                        auto:         e.auto
+                    };
+                }),
+                goalsA:     goalsA,
+                goalsB:     goalsB,
+                setsA:      setsA,
+                setsB:      setsB,
+                currentSet: currentSet,
+                matchOver:  matchOver
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (ex) { /* storage unavailable – silently ignore */ }
+    }
+
+    // Restore all mutable state from localStorage (called once on page load).
+    function loadState() {
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+            var data = JSON.parse(raw);
+            goalsA     = data.goalsA     || [0, 0, 0, 0, 0];
+            goalsB     = data.goalsB     || [0, 0, 0, 0, 0];
+            setsA      = data.setsA      || 0;
+            setsB      = data.setsB      || 0;
+            currentSet = data.currentSet || 1;
+            matchOver  = data.matchOver  || false;
+            eventHistory = (data.events || []).map(function (e) {
+                return {
+                    timestamp:    e.timestamp,
+                    type:         e.type,
+                    rod:          e.rod,
+                    teamA:        e.teamA,
+                    isTransition: e.isTransition,
+                    set:          e.set,
+                    auto:         e.auto,
+                    cellEl:       findCell(e)
+                };
+            });
+        } catch (ex) {
+            // Corrupted storage – reset silently so the page still loads.
+            eventHistory = [];
+            goalsA     = [0, 0, 0, 0, 0];
+            goalsB     = [0, 0, 0, 0, 0];
+            setsA      = 0;
+            setsB      = 0;
+            currentSet = 1;
+            matchOver  = false;
+        }
     }
 
     // ── Highlighting ─────────────────────────────────────────────
@@ -219,20 +303,28 @@
         }
 
         updateStats();
+        saveState();
     }
 
     // ── Statistics ───────────────────────────────────────────────
 
     function computeStats(events) {
         var s = {
-            poss3A:   0, poss3B:   0,
-            poss5A:   0, poss5B:   0,
-            poss2A:   0, poss2B:   0,
-            scored3A: 0, scored3B: 0,
-            scored5A: 0, scored5B: 0,
-            scored2A: 0, scored2B: 0,
-            fiveTo3A: 0, fiveTo3B: 0,
-            twoTo3A:  0, twoTo3B:  0
+            poss3A:    0, poss3B:    0,
+            poss5A:    0, poss5B:    0,
+            poss2A:    0, poss2B:    0,
+            scored3A:  0, scored3B:  0,
+            scored5A:  0, scored5B:  0,
+            scored2A:  0, scored2B:  0,
+            fiveTo3A:  0, fiveTo3B:  0,
+            twoTo3A:   0, twoTo3B:   0,
+            block5A:   0, block5B:   0,
+            steal5A:   0, steal5B:   0,
+            counter5A: 0, counter5B: 0,
+            block2A:   0, block2B:   0,
+            steal2A:   0, steal2B:   0,
+            saves3A:   0, saves3B:   0,
+            foeteliA:  0, foeteliB:  0
         };
 
         // Include rod, grey (with team), and goal events; drop teamless items.
@@ -258,25 +350,59 @@
 
             if (i + 1 < m.length) {
                 var n = m[i + 1];
+                var eBall = (e.type === 'rod' || e.type === 'grey');
+                var nBall = (n.type === 'rod' || n.type === 'grey');
 
-                // 5-to-3 and 2-to-3: consecutive rod/grey events of the same team.
-                if ((e.type === 'rod' || e.type === 'grey') &&
-                    (n.type === 'rod' || n.type === 'grey') &&
-                    e.teamA === n.teamA) {
+                // ── Same-team ball-to-ball transitions ──────────────
+                if (eBall && nBall && e.teamA === n.teamA) {
+                    // 5 to 3 pass (same team)
                     if (e.rod === ROD_5 && n.rod === ROD_3) {
                         if (e.teamA) s.fiveTo3A++; else s.fiveTo3B++;
                     }
+                    // 2 to 3 pass (same team)
                     if (e.rod === ROD_2 && n.rod === ROD_3) {
                         if (e.teamA) s.twoTo3A++; else s.twoTo3B++;
                     }
+                    // 5-rod block: 5 → 5 same team
+                    if (e.rod === ROD_5 && n.rod === ROD_5) {
+                        if (e.teamA) s.block5A++; else s.block5B++;
+                    }
+                    // 2-rod block: 2 → 2 same team
+                    if (e.rod === ROD_2 && n.rod === ROD_2) {
+                        if (e.teamA) s.block2A++; else s.block2B++;
+                    }
                 }
 
-                // Rod scored: rod/grey possession directly followed by same-team goal.
-                if ((e.type === 'rod' || e.type === 'grey') &&
-                    n.type === 'goal' && e.teamA === n.teamA) {
+                // ── Cross-team ball-to-ball transitions ─────────────
+                if (eBall && nBall && e.teamA !== n.teamA) {
+                    // 5-rod steal: 5 → opponent 5 (credit to new holder)
+                    if (e.rod === ROD_5 && n.rod === ROD_5) {
+                        if (n.teamA) s.steal5A++; else s.steal5B++;
+                    }
+                    // 5-rod counter: 5 → opponent 3 (credit to new holder)
+                    if (e.rod === ROD_5 && n.rod === ROD_3) {
+                        if (n.teamA) s.counter5A++; else s.counter5B++;
+                    }
+                    // 2-rod steal: 2 → opponent 3 (credit to new holder)
+                    if (e.rod === ROD_2 && n.rod === ROD_3) {
+                        if (n.teamA) s.steal2A++; else s.steal2B++;
+                    }
+                    // 3-rod saves: opponent 3 → own 2 (credit to new holder)
+                    if (e.rod === ROD_3 && n.rod === ROD_2) {
+                        if (n.teamA) s.saves3A++; else s.saves3B++;
+                    }
+                }
+
+                // ── Rod scored: possession directly followed by same-team goal ──
+                if (eBall && n.type === 'goal' && e.teamA === n.teamA) {
                     if (e.rod === ROD_3) { if (e.teamA) s.scored3A++; else s.scored3B++; }
                     else if (e.rod === ROD_5) { if (e.teamA) s.scored5A++; else s.scored5B++; }
                     else if (e.rod === ROD_2) { if (e.teamA) s.scored2A++; else s.scored2B++; }
+                }
+
+                // ── Föteli / own goal: 2-rod followed by opponent's goal ────────
+                if (eBall && e.rod === ROD_2 && n.type === 'goal' && e.teamA !== n.teamA) {
+                    if (e.teamA) s.foeteliA++; else s.foeteliB++;
                 }
             }
         }
@@ -303,14 +429,21 @@
 
         var s   = computeStats(filtered);
         var map = {
-            '3-rod-poss':   [s.poss3A,   s.poss3B],
-            '5-rod-poss':   [s.poss5A,   s.poss5B],
-            '2-rod-poss':   [s.poss2A,   s.poss2B],
-            '3-rod-scored': [s.scored3A, s.scored3B],
-            '5-rod-scored': [s.scored5A, s.scored5B],
-            '2-rod-scored': [s.scored2A, s.scored2B],
-            '5-to-3':       [s.fiveTo3A, s.fiveTo3B],
-            '2-to-3':       [s.twoTo3A,  s.twoTo3B]
+            '3-rod-poss':    [s.poss3A,    s.poss3B],
+            '5-rod-poss':    [s.poss5A,    s.poss5B],
+            '2-rod-poss':    [s.poss2A,    s.poss2B],
+            '3-rod-scored':  [s.scored3A,  s.scored3B],
+            '5-rod-scored':  [s.scored5A,  s.scored5B],
+            '2-rod-scored':  [s.scored2A,  s.scored2B],
+            '5-to-3':        [s.fiveTo3A,  s.fiveTo3B],
+            '2-to-3':        [s.twoTo3A,   s.twoTo3B],
+            '5-rod-block':   [s.block5A,   s.block5B],
+            '5-rod-steal':   [s.steal5A,   s.steal5B],
+            '5-rod-counter': [s.counter5A, s.counter5B],
+            '2-rod-block':   [s.block2A,   s.block2B],
+            '2-rod-steal':   [s.steal2A,   s.steal2B],
+            '3-rod-saves':   [s.saves3A,   s.saves3B],
+            'foeteli':       [s.foeteliA,  s.foeteliB]
         };
 
         Object.keys(map).forEach(function (key) {
@@ -352,7 +485,12 @@
         // targets the goal that caused it (one press = undo goal + placement).
         if (eventHistory[eventHistory.length - 1].auto) {
             eventHistory.pop();
-            if (eventHistory.length === 0) { highlightCell(null); updateStats(); return; }
+            if (eventHistory.length === 0) {
+                highlightCell(null);
+                updateStats();
+                saveState();
+                return;
+            }
         }
 
         var removed = eventHistory.pop();
@@ -370,10 +508,11 @@
         }
 
         var last = eventHistory.length > 0 ? eventHistory[eventHistory.length - 1] : null;
-        if (last) updateHighlight(last.cellEl);
-        else      highlightCell(null);
+        if (last && last.cellEl) updateHighlight(last.cellEl);
+        else                     highlightCell(null);
 
         updateStats();
+        saveState();
     });
 
     // Reset
@@ -393,8 +532,16 @@
 
         activateTab(document.querySelector('[data-tab="game"]'), false);
         updateStats();
+        saveState();
     });
 
     // ── Initial render ───────────────────────────────────────────
+    loadState();
+
+    var lastEv = eventHistory.length > 0 ? eventHistory[eventHistory.length - 1] : null;
+    if (lastEv && lastEv.cellEl) updateHighlight(lastEv.cellEl);
+    if (matchOver) disableGrid();
+
     updateScoreboard();
+    activateTab(document.querySelector('[data-tab="game"]'), false);
 }());
