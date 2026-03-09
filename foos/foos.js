@@ -75,7 +75,16 @@
         }
     }
 
-    // ── Scoreboard ───────────────────────────────────────────────
+    // ── Scoreboard & tab visibility ──────────────────────────────
+
+    function updateTabVisibility() {
+        document.querySelectorAll('.foos-tab[data-tab]').forEach(function (tab) {
+            var tabData = tab.getAttribute('data-tab');
+            if (tabData === 'game') return; // Game tab is always visible
+            var setNum = parseInt(tabData.replace('set', ''), 10);
+            tab.style.display = (!isNaN(setNum) && setNum <= currentSet) ? '' : 'none';
+        });
+    }
 
     function updateScoreboard() {
         var elA = document.querySelector('[data-sb-sets][data-team="a"]');
@@ -92,6 +101,8 @@
             if (cA) { cA.style.visibility = show ? '' : 'hidden'; cA.textContent = show ? goalsA[s - 1] : ''; }
             if (cB) { cB.style.visibility = show ? '' : 'hidden'; cB.textContent = show ? goalsB[s - 1] : ''; }
         }
+
+        updateTabVisibility();
     }
 
     // ── Grid enable/disable ──────────────────────────────────────

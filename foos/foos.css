@@ -254,7 +254,7 @@ footer #darkmode-toggle {
 .foos-bar-a,
 .foos-bar-b {
     flex: 1;
-    height: 75%;
+    height: 75%; /* ~50% taller than the original 50% per design request */
     min-height: 6px;
 }
 
