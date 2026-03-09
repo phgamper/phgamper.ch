@@ -122,6 +122,40 @@
             border: 1px solid var(--bs-border-color);
             background-color: var(--bs-tertiary-bg);
         }
+
+        /* Toolbar
+           12-column grid matching the table width */
+        .foos-toolbar {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4px;
+            width: 100%;
+            max-width: 500px;
+            margin: 4px auto 0;
+        }
+
+        .foos-tb-btn {
+            height: 44px;
+            border-radius: 3px;
+            border: 1px solid var(--bs-border-color);
+            background-color: var(--bs-tertiary-bg);
+            color: var(--bs-body-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .foos-tb-btn:hover {
+            opacity: 0.75;
+        }
+
+        .foos-tb-empty {
+            height: 44px;
+        }
     </style>
 </head>
 
@@ -195,6 +229,25 @@
                         <div class="foos-cell foos-cell-transparent foos-span-2"></div>
 
                     </div><!-- /.foos-grid -->
+
+                    <!-- Toolbar
+                         Layout (12 columns): T | E | E | E | U | S | E | R | E | E | E | T
+                         T = Timeout, U = Undo, S = Switch side, R = Reset, E = empty
+                    -->
+                    <div class="foos-toolbar">
+                        <button class="foos-tb-btn" type="button" aria-label="Timeout (Team A)"><i class="fa-solid fa-stopwatch"></i></button>
+                        <div class="foos-tb-empty"></div>
+                        <div class="foos-tb-empty"></div>
+                        <div class="foos-tb-empty"></div>
+                        <button class="foos-tb-btn" type="button" aria-label="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button class="foos-tb-btn" type="button" aria-label="Switch side"><i class="fa-solid fa-shuffle"></i></button>
+                        <div class="foos-tb-empty"></div>
+                        <button class="foos-tb-btn" type="button" aria-label="Reset"><i class="fa-solid fa-trash"></i></button>
+                        <div class="foos-tb-empty"></div>
+                        <div class="foos-tb-empty"></div>
+                        <div class="foos-tb-empty"></div>
+                        <button class="foos-tb-btn" type="button" aria-label="Timeout (Team B)"><i class="fa-solid fa-stopwatch"></i></button>
+                    </div><!-- /.foos-toolbar -->
 
                     <!-- Bo5 Scoreboard
                          Layout (8 columns × 3 rows):
