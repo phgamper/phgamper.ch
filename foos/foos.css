@@ -336,3 +336,10 @@ footer #darkmode-toggle {
     color: #e4e4e4;
 }
 
+/* Disabled state: applied to .foos-grid when the match is over */
+.foos-grid-disabled .foos-clickable {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+}
+
