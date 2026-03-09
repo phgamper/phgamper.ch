@@ -63,6 +63,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 3fr 1.5fr repeat(5, 1.5fr);
     gap: 4px;
+    align-items: center;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -92,7 +93,7 @@ body {
     border: 1px solid var(--bs-border-color);
     background-color: var(--bs-tertiary-bg);
     font-weight: 700;
-    padding: 3px;
+    height: 50px;
 }
 
 /* Toolbar
