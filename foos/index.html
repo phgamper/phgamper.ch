@@ -148,6 +148,16 @@
         <!-- ── Right: Analysis column ─────────────────────────── -->
         <div class="foos-analysis-col">
 
+            <!-- Tab bar: Game overview + per-set tabs -->
+            <div class="foos-tabs" role="tablist">
+                <button class="foos-tab foos-tab-active" type="button" data-tab="game" role="tab" aria-selected="true" tabindex="0">Game</button>
+                <button class="foos-tab" type="button" data-tab="set1" role="tab" aria-selected="false" tabindex="-1">Set 1</button>
+                <button class="foos-tab" type="button" data-tab="set2" role="tab" aria-selected="false" tabindex="-1">Set 2</button>
+                <button class="foos-tab" type="button" data-tab="set3" role="tab" aria-selected="false" tabindex="-1">Set 3</button>
+                <button class="foos-tab" type="button" data-tab="set4" role="tab" aria-selected="false" tabindex="-1">Set 4</button>
+                <button class="foos-tab" type="button" data-tab="set5" role="tab" aria-selected="false" tabindex="-1">Set 5</button>
+            </div>
+
             <!-- 4-column grid: [Team A val] [bi-directional bar] [Team B val] [stat label]
                  Row 1 = column headers; rows 2–22 = the 21 stats.
                  Bar fills 50/50 by default; JS will later set flex values for real data. -->
@@ -262,6 +272,31 @@
             </div>
         </div>
     </div>
+    <script>
+        // Tab bar: toggle active tab in the analysis column
+        var tabs = Array.from(document.querySelectorAll('.foos-tab'));
+        tabs.forEach(function (tab, index) {
+            tab.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    t.classList.remove('foos-tab-active');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
+                tab.classList.add('foos-tab-active');
+                tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
+                tab.focus();
+            });
+            tab.addEventListener('keydown', function (e) {
+                var next;
+                if (e.key === 'ArrowRight') { next = tabs[(index + 1) % tabs.length]; }
+                else if (e.key === 'ArrowLeft') { next = tabs[(index - 1 + tabs.length) % tabs.length]; }
+                else if (e.key === 'Home') { next = tabs[0]; }
+                else if (e.key === 'End') { next = tabs[tabs.length - 1]; }
+                if (next) { e.preventDefault(); next.click(); }
+            });
+        });
+    </script>
 
 </body>
 
