@@ -43,7 +43,7 @@
             gap: 4px;
             width: 100%;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 16px auto;
         }
 
         .foos-cell {
@@ -172,7 +172,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="mb-4">Foos</h2>
+                    <!-- Bo5 Scoreboard
+                         Layout (8 columns × 3 rows):
+                           [blank] | Team  |  S  |  P  |  P  |  P  |  P  |  P
+                           W       | TeamA | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
+                           B       | TeamB | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
+                    -->
+                    <div class="foos-scoreboard mb-4">
+
+                        <!-- Header row -->
+                        <div class="foos-sb-cell foos-sb-header"></div>
+                        <div class="foos-sb-cell foos-sb-header foos-sb-name">Team</div>
+                        <div class="foos-sb-cell foos-sb-header">S</div>
+                        <div class="foos-sb-cell foos-sb-header">P</div>
+                        <div class="foos-sb-cell foos-sb-header">P</div>
+                        <div class="foos-sb-cell foos-sb-header">P</div>
+                        <div class="foos-sb-cell foos-sb-header">P</div>
+                        <div class="foos-sb-cell foos-sb-header">P</div>
+
+                        <!-- Team A row (white) -->
+                        <div class="foos-sb-cell foos-cell-white"></div>
+                        <div class="foos-sb-cell foos-sb-name">Team A</div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+
+                        <!-- Team B row (black) -->
+                        <div class="foos-sb-cell foos-cell-black"></div>
+                        <div class="foos-sb-cell foos-sb-name">Team B</div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+                        <div class="foos-sb-cell foos-sb-score"></div>
+
+                    </div><!-- /.foos-scoreboard -->
 
                     <!-- Colored grid
                          Layout (5 columns × 8 rows):
@@ -248,46 +286,6 @@
                         <div class="foos-tb-empty"></div>
                         <button class="foos-tb-btn" type="button" aria-label="Timeout (Team B)"><i class="fa-solid fa-stopwatch"></i></button>
                     </div><!-- /.foos-toolbar -->
-
-                    <!-- Bo5 Scoreboard
-                         Layout (8 columns × 3 rows):
-                           [blank] | Team  |  S  |  P  |  P  |  P  |  P  |  P
-                           W       | TeamA | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
-                           B       | TeamB | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
-                    -->
-                    <div class="foos-scoreboard mt-4">
-
-                        <!-- Header row -->
-                        <div class="foos-sb-cell foos-sb-header"></div>
-                        <div class="foos-sb-cell foos-sb-header foos-sb-name">Team</div>
-                        <div class="foos-sb-cell foos-sb-header">S</div>
-                        <div class="foos-sb-cell foos-sb-header">P</div>
-                        <div class="foos-sb-cell foos-sb-header">P</div>
-                        <div class="foos-sb-cell foos-sb-header">P</div>
-                        <div class="foos-sb-cell foos-sb-header">P</div>
-                        <div class="foos-sb-cell foos-sb-header">P</div>
-
-                        <!-- Team A row (white) -->
-                        <div class="foos-sb-cell foos-cell-white"></div>
-                        <div class="foos-sb-cell foos-sb-name">Team A</div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-
-                        <!-- Team B row (black) -->
-                        <div class="foos-sb-cell foos-cell-black"></div>
-                        <div class="foos-sb-cell foos-sb-name">Team B</div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-
-                    </div><!-- /.foos-scoreboard -->
 
                 </div>
             </div>
