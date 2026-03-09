@@ -1,31 +1,55 @@
 /* Override main page: no background image, fill viewport without scrolling */
-html {
+html,
+body {
     height: 100%;
     overflow: hidden;
 }
 
 body {
     background: none;
-    overflow: hidden;
     padding-top: 80px; /* clear fixed navbar */
     box-sizing: border-box;
-    /* height: 100% already set by phgamper.css */
+    /* Font stack carried over from phgamper.css (phgamper.css no longer loaded here) */
+    font-family: "Varela Round", Ubuntu, Helvetica, Arial, sans-serif;
 }
 
-/* Two-column app layout (Input | Analysis), fills space below navbar */
+/* Navbar – only the subset of phgamper.css rules relevant to the foos page.
+   The navbar always has top-nav-collapse (no scroll on this page), so it is
+   always opaque.  The transition is kept so dark-mode toggle animates smoothly. */
+.navbar-custom {
+    background: transparent;
+    border-bottom: none;
+    -webkit-transition: background 0.5s ease-in-out;
+    transition: background 0.5s ease-in-out;
+}
+
+.navbar-custom.top-nav-collapse {
+    background-color: rgba(250, 250, 250, 0.95);
+}
+
+/* On mobile: always opaque even without top-nav-collapse */
+@media (max-width: 767.98px) {
+    .navbar-custom {
+        background-color: rgba(250, 250, 250, 0.95);
+    }
+}
+
+/* Two-column app layout (Input | Analysis), fills space below navbar.
+   Use calc() explicitly so the height doesn't rely on a percentage chain. */
 .foos-main {
-    height: 100%;
+    height: calc(100% - 80px);
     display: flex;
-    gap: 16px;
-    padding: 8px 16px;
+    gap: 20px;
+    padding: 12px 20px;
     box-sizing: border-box;
     overflow: hidden;
     align-items: stretch;
 }
 
-/* ── Left: Input column ──────────────────────────────────────── */
+/* ── Left: Input column (~40%) ───────────────────────────────── */
 .foos-input-col {
-    flex: 0 0 500px;
+    flex: 2;          /* 2 / (2+3) = 40% of available width */
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -147,9 +171,9 @@ body {
     height: 44px;
 }
 
-/* ── Right: Analysis column ──────────────────────────────────── */
+/* ── Right: Analysis column (~60%) ──────────────────────────── */
 .foos-analysis-col {
-    flex: 1;
+    flex: 3;          /* 3 / (2+3) = 60% of available width */
     min-width: 0;
     min-height: 0;
     display: flex;
@@ -192,7 +216,7 @@ body {
 .foos-bar-a,
 .foos-bar-b {
     flex: 1;
-    height: 55%;
+    height: 25%;
     min-height: 3px;
 }
 
