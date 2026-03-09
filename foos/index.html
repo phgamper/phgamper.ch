@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="NOINDEX,NOFOLLOW">
+    <meta name="author" content="Philipp Gamper">
+    <title>Foos – phgamper.ch</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/phgamper.css" rel="stylesheet" type="text/css">
+    <link href="../css/darkmode.css" rel="stylesheet" type="text/css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script src="../js/darkmode.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <style>
+        /* Override main page body background image */
+        body {
+            background: none;
+        }
+
+        /* Foos page content area */
+        .foos-content {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Colored grid using CSS grid */
+        .foos-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .foos-cell {
+            height: 60px;
+            border-radius: 3px;
+        }
+
+        .foos-cell-black {
+            background-color: #000000;
+        }
+
+        .foos-cell-grey {
+            background-color: #808080;
+        }
+
+        .foos-cell-white {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+        }
+
+        .foos-cell-transparent {
+            background-color: transparent;
+        }
+
+        /* Colspan helpers */
+        .foos-span-2 {
+            grid-column: span 2;
+        }
+
+        .foos-span-3 {
+            grid-column: span 3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom fixed-top navbar-expand-md top-nav-collapse">
+        <button id="darkmode-toggle" aria-label="Toggle dark mode"><span class="fa-stack"><i class="fa-solid fa-circle fa-stack-2x"></i><i class="fa-solid fa-moon fa-stack-1x fa-inverse" id="darkmode-icon"></i></span></button>
+        <a class="nav-link navbar-brand ms-auto" href="/" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+    </nav>
+
+    <!-- Main content -->
+    <main class="foos-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-4">Foos</h2>
+
+                    <!-- Colored grid
+                         Layout (5 columns × 8 rows):
+                           T  T  W  T  T
+                           B  G  G  G  T
+                           T  G  G  G  W
+                           B  G  G  G  T
+                           T  G  G  G  W
+                           B  G  G  G  T
+                           T  G  G  G  W
+                           T  T  B  T  T
+                         Horizontally adjacent same-colour cells are merged.
+                    -->
+                    <div class="foos-grid">
+
+                        <!-- Row 1: (T T) W (T T) -->
+                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+                        <div class="foos-cell foos-cell-white"></div>
+                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+
+                        <!-- Row 2: B (G G G) T -->
+                        <div class="foos-cell foos-cell-black"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-transparent"></div>
+
+                        <!-- Row 3: T (G G G) W -->
+                        <div class="foos-cell foos-cell-transparent"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-white"></div>
+
+                        <!-- Row 4: B (G G G) T -->
+                        <div class="foos-cell foos-cell-black"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-transparent"></div>
+
+                        <!-- Row 5: T (G G G) W -->
+                        <div class="foos-cell foos-cell-transparent"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-white"></div>
+
+                        <!-- Row 6: B (G G G) T -->
+                        <div class="foos-cell foos-cell-black"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-transparent"></div>
+
+                        <!-- Row 7: T (G G G) W -->
+                        <div class="foos-cell foos-cell-transparent"></div>
+                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                        <div class="foos-cell foos-cell-white"></div>
+
+                        <!-- Row 8: (T T) B (T T) -->
+                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+                        <div class="foos-cell foos-cell-black"></div>
+                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+
+                    </div><!-- /.foos-grid -->
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner row">
+                <div class="col-6">
+                    <p>maintained by <a href="/">phgamper</a></p>
+                </div>
+                <div class="col-6">
+                    <p class="float-end"><a href="#">Back to top</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Collapse navbar on scroll (same pattern as main page)
+        function collapseNavbar() {
+            document.querySelector('.navbar.fixed-top').classList.toggle('top-nav-collapse', window.scrollY > 50);
+        }
+        collapseNavbar();
+        window.addEventListener('scroll', collapseNavbar);
+    </script>
+
+</body>
+
+</html>
