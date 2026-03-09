@@ -293,4 +293,46 @@ footer #darkmode-toggle {
     min-height: 0;
 }
 
+/* ── Clickable grid cells ────────────────────────────────── */
+/* Colored rod/goal cells and grey placement cells become interactive. */
+.foos-clickable {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.1s ease;
+}
+
+.foos-clickable:hover {
+    opacity: 0.8;
+}
+
+.foos-clickable:active {
+    opacity: 0.55;
+}
+
+/* Ring indicator: marks the current ball position after a click. */
+.foos-cell-current {
+    box-shadow: inset 0 0 0 3px rgba(255, 210, 0, 0.85);
+}
+
+/* ── Subtle rod/goal labels inside coloured cells ────────── */
+/* Text colour is chosen to be just barely distinguishable from the
+   cell background, keeping labels visually quiet. */
+.foos-cell-label {
+    font-size: 0.6rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Black cell: label slightly lighter than black */
+.foos-cell-black .foos-cell-label {
+    color: #1e1e1e;
+}
+
+/* White cell: label slightly darker than white */
+.foos-cell-white .foos-cell-label {
+    color: #e4e4e4;
+}
 

@@ -79,44 +79,44 @@
             -->
             <div class="foos-grid">
 
-                <!-- Row 1: (T T) W (T T) -->
+                <!-- Row 1: (T T) W (T T) — white goal (Team A scores) -->
                 <div class="foos-cell foos-cell-transparent foos-span-2"></div>
-                <div class="foos-cell foos-cell-white"></div>
+                <div class="foos-cell foos-cell-white foos-clickable" data-cell-type="goal" data-team="a"><span class="foos-cell-label">goal</span></div>
                 <div class="foos-cell foos-cell-transparent foos-span-2"></div>
 
-                <!-- Row 2: B (G G G) T -->
-                <div class="foos-cell foos-cell-black"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <!-- Row 2: B (G G G) T — black 2-rod -->
+                <div class="foos-cell foos-cell-black foos-clickable" data-cell-type="rod" data-rod="2" data-team="b"><span class="foos-cell-label">2-rod</span></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="2"></div>
                 <div class="foos-cell foos-cell-transparent"></div>
 
-                <!-- Row 3: T (G G G) W -->
+                <!-- Row 3: T (G G G) W — white 3-rod -->
                 <div class="foos-cell foos-cell-transparent"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                <div class="foos-cell foos-cell-white"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="3"></div>
+                <div class="foos-cell foos-cell-white foos-clickable" data-cell-type="rod" data-rod="3" data-team="a"><span class="foos-cell-label">3-rod</span></div>
 
-                <!-- Row 4: B (G G G) T -->
-                <div class="foos-cell foos-cell-black"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                <div class="foos-cell foos-cell-transparent"></div>
-
-                <!-- Row 5: T (G G G) W -->
-                <div class="foos-cell foos-cell-transparent"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                <div class="foos-cell foos-cell-white"></div>
-
-                <!-- Row 6: B (G G G) T -->
-                <div class="foos-cell foos-cell-black"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <!-- Row 4: B (G G G) T — black 5-rod -->
+                <div class="foos-cell foos-cell-black foos-clickable" data-cell-type="rod" data-rod="5" data-team="b"><span class="foos-cell-label">5-rod</span></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="5"></div>
                 <div class="foos-cell foos-cell-transparent"></div>
 
-                <!-- Row 7: T (G G G) W -->
+                <!-- Row 5: T (G G G) W — white 5-rod -->
                 <div class="foos-cell foos-cell-transparent"></div>
-                <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                <div class="foos-cell foos-cell-white"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="5"></div>
+                <div class="foos-cell foos-cell-white foos-clickable" data-cell-type="rod" data-rod="5" data-team="a"><span class="foos-cell-label">5-rod</span></div>
 
-                <!-- Row 8: (T T) B (T T) -->
+                <!-- Row 6: B (G G G) T — black 3-rod -->
+                <div class="foos-cell foos-cell-black foos-clickable" data-cell-type="rod" data-rod="3" data-team="b"><span class="foos-cell-label">3-rod</span></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="3"></div>
+                <div class="foos-cell foos-cell-transparent"></div>
+
+                <!-- Row 7: T (G G G) W — white 2-rod -->
+                <div class="foos-cell foos-cell-transparent"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3 foos-clickable" data-cell-type="grey" data-rod="2"></div>
+                <div class="foos-cell foos-cell-white foos-clickable" data-cell-type="rod" data-rod="2" data-team="a"><span class="foos-cell-label">2-rod</span></div>
+
+                <!-- Row 8: (T T) B (T T) — black goal (Team B scores) -->
                 <div class="foos-cell foos-cell-transparent foos-span-2"></div>
-                <div class="foos-cell foos-cell-black"></div>
+                <div class="foos-cell foos-cell-black foos-clickable" data-cell-type="goal" data-team="b"><span class="foos-cell-label">goal</span></div>
                 <div class="foos-cell foos-cell-transparent foos-span-2"></div>
 
             </div><!-- /.foos-grid -->
@@ -163,15 +163,15 @@
                  Bar fills 50/50 by default; JS will later set flex values for real data. -->
             <div class="foos-analysis-grid">
 
-                <!-- 21 stat rows -->
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod poss</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod poss</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod poss</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod scored</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod scored</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod scored</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 to 3</div>
-                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 to 3</div>
+                <!-- 21 stat rows (first 8 are live; the rest are placeholders) -->
+                <div class="foos-ana-val" data-stat="3-rod-poss" data-team="a">0</div><div class="foos-ana-bar" data-stat="3-rod-poss"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="3-rod-poss" data-team="b">0</div><div class="foos-ana-label">3 rod poss</div>
+                <div class="foos-ana-val" data-stat="5-rod-poss" data-team="a">0</div><div class="foos-ana-bar" data-stat="5-rod-poss"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="5-rod-poss" data-team="b">0</div><div class="foos-ana-label">5 rod poss</div>
+                <div class="foos-ana-val" data-stat="2-rod-poss" data-team="a">0</div><div class="foos-ana-bar" data-stat="2-rod-poss"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="2-rod-poss" data-team="b">0</div><div class="foos-ana-label">2 rod poss</div>
+                <div class="foos-ana-val" data-stat="3-rod-scored" data-team="a">0</div><div class="foos-ana-bar" data-stat="3-rod-scored"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="3-rod-scored" data-team="b">0</div><div class="foos-ana-label">3 rod scored</div>
+                <div class="foos-ana-val" data-stat="5-rod-scored" data-team="a">0</div><div class="foos-ana-bar" data-stat="5-rod-scored"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="5-rod-scored" data-team="b">0</div><div class="foos-ana-label">5 rod scored</div>
+                <div class="foos-ana-val" data-stat="2-rod-scored" data-team="a">0</div><div class="foos-ana-bar" data-stat="2-rod-scored"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="2-rod-scored" data-team="b">0</div><div class="foos-ana-label">2 rod scored</div>
+                <div class="foos-ana-val" data-stat="5-to-3" data-team="a">0</div><div class="foos-ana-bar" data-stat="5-to-3"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="5-to-3" data-team="b">0</div><div class="foos-ana-label">5 to 3</div>
+                <div class="foos-ana-val" data-stat="2-to-3" data-team="a">0</div><div class="foos-ana-bar" data-stat="2-to-3"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val" data-stat="2-to-3" data-team="b">0</div><div class="foos-ana-label">2 to 3</div>
                 <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod block</div>
                 <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod steal</div>
                 <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod counter</div>
@@ -296,6 +296,196 @@
                 if (next) { e.preventDefault(); next.click(); }
             });
         });
+    </script>
+
+    <script>
+        // ── Foosball ball-tracking & statistics ──────────────────────
+        (function () {
+            var ROD_3 = 0, ROD_5 = 1, ROD_2 = 2;
+
+            // Event history: every grid-cell click produces one entry.
+            // { timestamp, type('rod'|'grey'|'goal'), rod(0|1|2|null),
+            //   teamA(bool|null), isTransition(bool), set(1-5), cellEl }
+            var eventHistory = [];
+            var currentSet = 1;   // set being recorded; updated when a set-tab is clicked
+            var currentCellEl = null; // DOM element currently highlighted as ball position
+
+            function rodFromAttr(str) {
+                if (str === '3') return ROD_3;
+                if (str === '5') return ROD_5;
+                if (str === '2') return ROD_2;
+                return null;
+            }
+
+            // Return the most-recent non-grey event, or null.
+            function lastMeaningful() {
+                for (var i = eventHistory.length - 1; i >= 0; i--) {
+                    if (eventHistory[i].type !== 'grey') return eventHistory[i];
+                }
+                return null;
+            }
+
+            // Move the 'current ball position' ring to the given cell element.
+            function highlightCell(cellEl) {
+                if (currentCellEl) currentCellEl.classList.remove('foos-cell-current');
+                currentCellEl = cellEl || null;
+                if (currentCellEl) currentCellEl.classList.add('foos-cell-current');
+            }
+
+            function recordClick(cellEl) {
+                var cellType = cellEl.getAttribute('data-cell-type');
+                var rod = rodFromAttr(cellEl.getAttribute('data-rod'));
+                var teamStr = cellEl.getAttribute('data-team');
+                var teamA = (teamStr === 'a');
+                var lm = lastMeaningful();
+                var isTransition = (cellType === 'rod' && lm !== null && lm.type === 'rod');
+
+                eventHistory.push({
+                    timestamp:    Date.now(),
+                    type:         cellType,
+                    rod:          rod,
+                    teamA:        (cellType !== 'grey') ? teamA : null,
+                    isTransition: isTransition,
+                    set:          currentSet,
+                    cellEl:       cellEl
+                });
+
+                highlightCell(cellEl);
+                updateStats();
+            }
+
+            // ── Statistics computation ────────────────────────────────
+            function computeStats(events) {
+                var s = {
+                    poss3A: 0, poss3B: 0,
+                    poss5A: 0, poss5B: 0,
+                    poss2A: 0, poss2B: 0,
+                    scored3A: 0, scored3B: 0,
+                    scored5A: 0, scored5B: 0,
+                    scored2A: 0, scored2B: 0,
+                    fiveTo3A: 0, fiveTo3B: 0,
+                    twoTo3A:  0, twoTo3B:  0
+                };
+
+                // Only rod + goal events matter for stats (grey = transparent).
+                var m = events.filter(function (e) { return e.type !== 'grey'; });
+
+                for (var i = 0; i < m.length; i++) {
+                    var e = m[i];
+
+                    // Rod possession counts (placement OR transition both count).
+                    if (e.type === 'rod') {
+                        if (e.rod === ROD_3) { if (e.teamA) s.poss3A++; else s.poss3B++; }
+                        else if (e.rod === ROD_5) { if (e.teamA) s.poss5A++; else s.poss5B++; }
+                        else if (e.rod === ROD_2) { if (e.teamA) s.poss2A++; else s.poss2B++; }
+                    }
+
+                    // Consecutive-pair stats (look at the very next meaningful event).
+                    if (i + 1 < m.length) {
+                        var n = m[i + 1];
+
+                        // 5-to-3 and 2-to-3: adjacent rod events of the same team.
+                        if (e.type === 'rod' && n.type === 'rod' && e.teamA === n.teamA) {
+                            if (e.rod === ROD_5 && n.rod === ROD_3) {
+                                if (e.teamA) s.fiveTo3A++; else s.fiveTo3B++;
+                            }
+                            if (e.rod === ROD_2 && n.rod === ROD_3) {
+                                if (e.teamA) s.twoTo3A++; else s.twoTo3B++;
+                            }
+                        }
+
+                        // Rod scored: rod event immediately followed by a goal for the same team.
+                        if (e.type === 'rod' && n.type === 'goal' && e.teamA === n.teamA) {
+                            if (e.rod === ROD_3) { if (e.teamA) s.scored3A++; else s.scored3B++; }
+                            else if (e.rod === ROD_5) { if (e.teamA) s.scored5A++; else s.scored5B++; }
+                            else if (e.rod === ROD_2) { if (e.teamA) s.scored2A++; else s.scored2B++; }
+                        }
+                    }
+                }
+                return s;
+            }
+
+            // ── DOM update ───────────────────────────────────────────
+            function setBar(barEl, vA, vB) {
+                var total = vA + vB;
+                barEl.querySelector('.foos-bar-a').style.flex = (total === 0 ? 1 : vA);
+                barEl.querySelector('.foos-bar-b').style.flex = (total === 0 ? 1 : vB);
+            }
+
+            function updateStats() {
+                var activeTab = document.querySelector('.foos-tab-active');
+                var tabData = activeTab ? activeTab.getAttribute('data-tab') : 'game';
+
+                var filtered;
+                if (tabData === 'game') {
+                    filtered = eventHistory;
+                } else {
+                    var setNum = parseInt(tabData.replace('set', ''), 10);
+                    filtered = isNaN(setNum) ? [] : eventHistory.filter(function (e) { return e.set === setNum; });
+                }
+
+                var s = computeStats(filtered);
+                var map = {
+                    '3-rod-poss':   [s.poss3A,   s.poss3B],
+                    '5-rod-poss':   [s.poss5A,   s.poss5B],
+                    '2-rod-poss':   [s.poss2A,   s.poss2B],
+                    '3-rod-scored': [s.scored3A, s.scored3B],
+                    '5-rod-scored': [s.scored5A, s.scored5B],
+                    '2-rod-scored': [s.scored2A, s.scored2B],
+                    '5-to-3':       [s.fiveTo3A, s.fiveTo3B],
+                    '2-to-3':       [s.twoTo3A,  s.twoTo3B]
+                };
+
+                Object.keys(map).forEach(function (key) {
+                    var vA = map[key][0], vB = map[key][1];
+                    document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (el) {
+                        if (el.classList.contains('foos-ana-val')) {
+                            el.textContent = el.getAttribute('data-team') === 'a' ? vA : vB;
+                        } else if (el.classList.contains('foos-ana-bar')) {
+                            setBar(el, vA, vB);
+                        }
+                    });
+                });
+            }
+
+            // ── Event wiring ─────────────────────────────────────────
+
+            // Grid cell clicks
+            document.querySelectorAll('.foos-clickable').forEach(function (cell) {
+                cell.addEventListener('click', function () { recordClick(this); });
+            });
+
+            // Tab clicks: update currentSet and refresh stats view
+            document.querySelectorAll('.foos-tab').forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var tabData = this.getAttribute('data-tab');
+                    if (tabData !== 'game') {
+                        var sn = parseInt(tabData.replace('set', ''), 10);
+                        if (!isNaN(sn)) currentSet = sn;
+                    }
+                    updateStats();
+                });
+            });
+
+            // Undo: remove last event and restore previous cell indicator
+            document.querySelector('[aria-label="Undo"]').addEventListener('click', function () {
+                if (eventHistory.length === 0) return;
+                eventHistory.pop();
+                // Re-apply indicator to the new last event
+                var last = eventHistory.length > 0 ? eventHistory[eventHistory.length - 1] : null;
+                highlightCell(last ? last.cellEl : null);
+                updateStats();
+            });
+
+            // Reset: clear all history
+            document.querySelector('[aria-label="Reset"]').addEventListener('click', function () {
+                if (!confirm('Reset all tracking data?')) return;
+                eventHistory = [];
+                currentSet = 1;
+                highlightCell(null);
+                updateStats();
+            });
+        }());
     </script>
 
 </body>
