@@ -55,10 +55,67 @@ footer #darkmode-toggle {
     min-height: 0;
 }
 
-/* ── Middle: empty spacer column (20%) ───────────────────────── */
+/* ── Middle: Percentage analysis column (20%) ───────────────── */
 .foos-middle-col {
     flex: 1;          /* 1 / (2+1+2) = 20% of available width */
     min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2-column × 4-row grid filling the column */
+.foos-pct-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+}
+
+/* Each percentage slot: circle chart on top, label below */
+.foos-pct-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 0;
+    padding: 4px;
+    overflow: hidden;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+}
+
+/* Circle pie chart using conic-gradient.
+   Starts at 12 o'clock: Team A (light) on the right, Team B (dark) on the left.
+   Colors intentionally match .foos-bar-a / .foos-bar-b for visual consistency;
+   the light/dark contrast is sufficient for graphical (non-text) WCAG 1.4.11. */
+.foos-pie {
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    flex-shrink: 0;
+    /* default 50/50: Team A (light) | Team B (dark) */
+    background: conic-gradient(from -90deg, #d0d0d0 0% 50%, #555555 50% 100%);
+}
+
+.foos-pct-placeholder .foos-pie {
+    opacity: 0.35;
+}
+
+.foos-pct-label {
+    font-size: 0.55rem;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+[data-bs-theme="dark"] .foos-pie {
+    /* Dark-mode equivalents of .foos-bar-b (#707070) and .foos-bar-a (#cccccc) */
+    background: conic-gradient(from -90deg, #cccccc 0% 50%, #707070 50% 100%);
 }
 
 /* Colored grid: fills remaining height in the input column */
@@ -220,12 +277,12 @@ footer #darkmode-toggle {
 }
 
 /* 4-column grid: [Team A val] [bi-dir bar] [Team B val] [stat label]
-   22 rows: 1 header + 21 stat rows that share remaining height equally  */
+   15 stat rows that share remaining height equally  */
 .foos-analysis-grid {
     flex: 1;
     display: grid;
     grid-template-columns: 2.5rem 1fr 2.5rem auto;
-    grid-template-rows: repeat(21, 1fr);
+    grid-template-rows: repeat(15, 1fr);
     gap: 2px 4px;
     align-items: stretch;
     min-height: 0;
