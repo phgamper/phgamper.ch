@@ -53,6 +53,14 @@
 
         .foos-cell-black {
             background-color: #000000;
+            border: 1px solid transparent;
+        }
+
+        /* In dark mode the page background is also very dark, so give the
+           black cells a bright border to make them visible – mirroring the
+           border on white cells in light mode. */
+        [data-bs-theme="dark"] .foos-cell-black {
+            border-color: #aaaaaa;
         }
 
         .foos-cell-grey {
