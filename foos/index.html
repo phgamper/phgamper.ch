@@ -35,142 +35,160 @@
         <a class="nav-link navbar-brand ms-auto" href="/" aria-label="Home"><i class="fa-solid fa-house"></i></a>
     </nav>
 
-    <!-- Main content -->
-    <main class="foos-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Bo5 Scoreboard
-                         Layout (8 columns × 3 rows):
-                           [blank] | Team  |  S  |  P  |  P  |  P  |  P  |  P
-                           W       | TeamA | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
-                           B       | TeamB | [ ] | [ ] | [ ] | [ ] | [ ] | [ ]
-                    -->
-                    <div class="foos-scoreboard mb-4">
+    <!-- Main content: two-column flex layout (Input | Analysis) -->
+    <main class="foos-main">
 
-                        <!-- Team A row (white) -->
-                        <div class="foos-sb-cell foos-cell-white"></div>
-                        <div class="foos-sb-cell foos-sb-name">Team A</div>
-                        <div class="foos-sb-cell foos-sb-sets"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
+        <!-- ── Left: Input column ─────────────────────────────── -->
+        <div class="foos-input-col">
 
-                        <!-- Team B row (black) -->
-                        <div class="foos-sb-cell foos-cell-black"></div>
-                        <div class="foos-sb-cell foos-sb-name">Team B</div>
-                        <div class="foos-sb-cell foos-sb-sets"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
-                        <div class="foos-sb-cell foos-sb-score"></div>
+            <!-- Bo5 Scoreboard
+                 Layout (8 columns × 2 rows):
+                   W | TeamA | [sets] | [p1] | [p2] | [p3] | [p4] | [p5]
+                   B | TeamB | [sets] | [p1] | [p2] | [p3] | [p4] | [p5]
+            -->
+            <div class="foos-scoreboard">
 
-                    </div><!-- /.foos-scoreboard -->
+                <!-- Team A row (white) -->
+                <div class="foos-sb-cell foos-cell-white"></div>
+                <div class="foos-sb-cell foos-sb-name">Team A</div>
+                <div class="foos-sb-cell foos-sb-sets">3</div>
+                <div class="foos-sb-cell foos-sb-score">3</div>
+                <div class="foos-sb-cell foos-sb-score">5</div>
+                <div class="foos-sb-cell foos-sb-score">5</div>
+                <div class="foos-sb-cell foos-sb-score">4</div>
+                <div class="foos-sb-cell foos-sb-score">5</div>
 
-                    <!-- Colored grid
-                         Layout (5 columns × 8 rows):
-                           T  T  W  T  T
-                           B  G  G  G  T
-                           T  G  G  G  W
-                           B  G  G  G  T
-                           T  G  G  G  W
-                           B  G  G  G  T
-                           T  G  G  G  W
-                           T  T  B  T  T
-                         Horizontally adjacent same-colour cells are merged.
-                    -->
-                    <div class="foos-grid">
+                <!-- Team B row (black) -->
+                <div class="foos-sb-cell foos-cell-black"></div>
+                <div class="foos-sb-cell foos-sb-name">Team B</div>
+                <div class="foos-sb-cell foos-sb-sets">2</div>
+                <div class="foos-sb-cell foos-sb-score">5</div>
+                <div class="foos-sb-cell foos-sb-score">1</div>
+                <div class="foos-sb-cell foos-sb-score">4</div>
+                <div class="foos-sb-cell foos-sb-score">5</div>
+                <div class="foos-sb-cell foos-sb-score">2</div>
 
-                        <!-- Row 1: (T T) W (T T) -->
-                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
-                        <div class="foos-cell foos-cell-white"></div>
-                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+            </div><!-- /.foos-scoreboard -->
 
-                        <!-- Row 2: B (G G G) T -->
-                        <div class="foos-cell foos-cell-black"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-transparent"></div>
+            <!-- Colored grid
+                 Layout (5 columns × 8 rows):
+                   T  T  W  T  T
+                   B  G  G  G  T
+                   T  G  G  G  W
+                   B  G  G  G  T
+                   T  G  G  G  W
+                   B  G  G  G  T
+                   T  G  G  G  W
+                   T  T  B  T  T
+                 Horizontally adjacent same-colour cells are merged.
+            -->
+            <div class="foos-grid">
 
-                        <!-- Row 3: T (G G G) W -->
-                        <div class="foos-cell foos-cell-transparent"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-white"></div>
+                <!-- Row 1: (T T) W (T T) -->
+                <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+                <div class="foos-cell foos-cell-white"></div>
+                <div class="foos-cell foos-cell-transparent foos-span-2"></div>
 
-                        <!-- Row 4: B (G G G) T -->
-                        <div class="foos-cell foos-cell-black"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-transparent"></div>
+                <!-- Row 2: B (G G G) T -->
+                <div class="foos-cell foos-cell-black"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-transparent"></div>
 
-                        <!-- Row 5: T (G G G) W -->
-                        <div class="foos-cell foos-cell-transparent"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-white"></div>
+                <!-- Row 3: T (G G G) W -->
+                <div class="foos-cell foos-cell-transparent"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-white"></div>
 
-                        <!-- Row 6: B (G G G) T -->
-                        <div class="foos-cell foos-cell-black"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-transparent"></div>
+                <!-- Row 4: B (G G G) T -->
+                <div class="foos-cell foos-cell-black"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-transparent"></div>
 
-                        <!-- Row 7: T (G G G) W -->
-                        <div class="foos-cell foos-cell-transparent"></div>
-                        <div class="foos-cell foos-cell-grey foos-span-3"></div>
-                        <div class="foos-cell foos-cell-white"></div>
+                <!-- Row 5: T (G G G) W -->
+                <div class="foos-cell foos-cell-transparent"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-white"></div>
 
-                        <!-- Row 8: (T T) B (T T) -->
-                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
-                        <div class="foos-cell foos-cell-black"></div>
-                        <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+                <!-- Row 6: B (G G G) T -->
+                <div class="foos-cell foos-cell-black"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-transparent"></div>
 
-                    </div><!-- /.foos-grid -->
+                <!-- Row 7: T (G G G) W -->
+                <div class="foos-cell foos-cell-transparent"></div>
+                <div class="foos-cell foos-cell-grey foos-span-3"></div>
+                <div class="foos-cell foos-cell-white"></div>
 
-                    <!-- Toolbar
-                         Layout (12 columns): T | E | E | E | U | S | E | R | E | E | E | T
-                         T = Timeout, U = Undo, S = Switch side, R = Reset, E = empty
-                    -->
-                    <div class="foos-toolbar">
-                        <button class="foos-tb-btn" type="button" aria-label="Timeout (Team A)"><i class="fa-solid fa-stopwatch"></i></button>
-                        <div class="foos-tb-empty"></div>
-                        <div class="foos-tb-empty"></div>
-                        <div class="foos-tb-empty"></div>
-                        <button class="foos-tb-btn" type="button" aria-label="Undo"><i class="fa-solid fa-rotate-left"></i></button>
-                        <button class="foos-tb-btn" type="button" aria-label="Switch side"><i class="fa-solid fa-shuffle"></i></button>
-                        <div class="foos-tb-empty"></div>
-                        <button class="foos-tb-btn" type="button" aria-label="Reset"><i class="fa-solid fa-trash"></i></button>
-                        <div class="foos-tb-empty"></div>
-                        <div class="foos-tb-empty"></div>
-                        <div class="foos-tb-empty"></div>
-                        <button class="foos-tb-btn" type="button" aria-label="Timeout (Team B)"><i class="fa-solid fa-stopwatch"></i></button>
-                    </div><!-- /.foos-toolbar -->
+                <!-- Row 8: (T T) B (T T) -->
+                <div class="foos-cell foos-cell-transparent foos-span-2"></div>
+                <div class="foos-cell foos-cell-black"></div>
+                <div class="foos-cell foos-cell-transparent foos-span-2"></div>
 
-                </div>
-            </div>
-        </div>
+            </div><!-- /.foos-grid -->
+
+            <!-- Toolbar
+                 Layout (12 columns): T | E | E | E | U | S | E | R | E | E | E | T
+                 T = Timeout, U = Undo, S = Switch side, R = Reset, E = empty
+            -->
+            <div class="foos-toolbar">
+                <button class="foos-tb-btn" type="button" aria-label="Timeout (Team A)"><i class="fa-solid fa-stopwatch"></i></button>
+                <div class="foos-tb-empty"></div>
+                <div class="foos-tb-empty"></div>
+                <div class="foos-tb-empty"></div>
+                <button class="foos-tb-btn" type="button" aria-label="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="foos-tb-btn" type="button" aria-label="Switch side"><i class="fa-solid fa-shuffle"></i></button>
+                <div class="foos-tb-empty"></div>
+                <button class="foos-tb-btn" type="button" aria-label="Reset"><i class="fa-solid fa-trash"></i></button>
+                <div class="foos-tb-empty"></div>
+                <div class="foos-tb-empty"></div>
+                <div class="foos-tb-empty"></div>
+                <button class="foos-tb-btn" type="button" aria-label="Timeout (Team B)"><i class="fa-solid fa-stopwatch"></i></button>
+            </div><!-- /.foos-toolbar -->
+
+        </div><!-- /.foos-input-col -->
+
+        <!-- ── Right: Analysis column ─────────────────────────── -->
+        <div class="foos-analysis-col">
+
+            <!-- 4-column grid: [Team A val] [bi-directional bar] [Team B val] [stat label]
+                 Row 1 = column headers; rows 2–22 = the 21 stats.
+                 Bar fills 50/50 by default; JS will later set flex values for real data. -->
+            <div class="foos-analysis-grid">
+
+                <!-- Header row -->
+                <div class="foos-ana-val foos-ana-header">A</div>
+                <div class="foos-ana-bar foos-ana-header"></div>
+                <div class="foos-ana-val foos-ana-header">B</div>
+                <div class="foos-ana-label foos-ana-header"></div>
+
+                <!-- 21 stat rows -->
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod poss</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod poss</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod poss</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod scored</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod scored</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod scored</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 to 3</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 to 3</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod block</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod steal</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod counter</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod block</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod steal</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod saves</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">föteli / own goal</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod pass (%)</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">5 rod pass eventually (%)</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod scored (%)</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">3 rod scored eventually (%)</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod scored (%)</div>
+                <div class="foos-ana-val">0</div><div class="foos-ana-bar"><div class="foos-bar-a"></div><div class="foos-bar-b"></div></div><div class="foos-ana-val">0</div><div class="foos-ana-label">2 rod clear (%)</div>
+
+            </div><!-- /.foos-analysis-grid -->
+
+        </div><!-- /.foos-analysis-col -->
+
     </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-inner row">
-                <div class="col-6">
-                    <p>maintained by <a href="/">phgamper</a></p>
-                </div>
-                <div class="col-6">
-                    <p class="float-end"><a href="#">Back to top</a></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Collapse navbar on scroll (same pattern as main page)
-        function collapseNavbar() {
-            document.querySelector('.navbar.fixed-top').classList.toggle('top-nav-collapse', window.scrollY > 50);
-        }
-        collapseNavbar();
-        window.addEventListener('scroll', collapseNavbar);
-    </script>
 
 </body>
 

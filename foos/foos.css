@@ -1,27 +1,49 @@
-/* Override main page body background image */
+/* Override main page: no background image, fill viewport without scrolling */
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     background: none;
+    overflow: hidden;
+    padding-top: 80px; /* clear fixed navbar */
+    box-sizing: border-box;
+    /* height: 100% already set by phgamper.css */
 }
 
-/* Foos page content area */
-.foos-content {
-    padding-top: 80px;
-    min-height: calc(100vh - 80px);
+/* Two-column app layout (Input | Analysis), fills space below navbar */
+.foos-main {
+    height: 100%;
+    display: flex;
+    gap: 16px;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    align-items: stretch;
 }
 
-/* Colored grid using CSS grid */
+/* ── Left: Input column ──────────────────────────────────────── */
+.foos-input-col {
+    flex: 0 0 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
+}
+
+/* Colored grid: fills remaining height in the input column */
 .foos-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     gap: 4px;
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    max-width: 500px;
-    margin: 32px auto;
 }
 
-.foos-cell {
-    height: 60px;
-}
+/* Grid cells: height comes from the flexible grid rows, no fixed height needed */
 
 .foos-cell-black {
     background-color: #000000;
@@ -63,10 +85,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 3fr 1.5fr repeat(5, 1.5fr);
     gap: 4px;
-    align-items: center;
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
 }
 
 .foos-sb-cell {
@@ -75,7 +94,6 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
-    font-weight: 600;
 }
 
 .foos-sb-name {
@@ -83,28 +101,28 @@ body {
     padding: 0 8px;
 }
 
-.foos-sb-score {
-    border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-tertiary-bg);
-    margin: 3px;
-}
-
+/* Sets total: bold to stand out from individual scores */
 .foos-sb-sets {
     border: 1px solid var(--bs-border-color);
     background-color: var(--bs-tertiary-bg);
     font-weight: 700;
-    height: 50px;
+}
+
+/* Individual set scores: same size as sets cell, grey background matching the playfield */
+.foos-sb-score {
+    border: 1px solid #666666;
+    background-color: #808080;
+    color: #ffffff;
+    font-weight: 400;
 }
 
 /* Toolbar
-   12-column grid matching the table width */
+   12-column grid matching the input column width */
 .foos-toolbar {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 4px;
     width: 100%;
-    max-width: 500px;
-    margin: 4px auto 0;
 }
 
 .foos-tb-btn {
@@ -127,4 +145,97 @@ body {
 
 .foos-tb-empty {
     height: 44px;
+}
+
+/* ── Right: Analysis column ──────────────────────────────────── */
+.foos-analysis-col {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 4-column grid: [Team A val] [bi-dir bar] [Team B val] [stat label]
+   22 rows: 1 header + 21 stat rows that share remaining height equally  */
+.foos-analysis-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 2.5rem auto;
+    grid-template-rows: auto repeat(21, 1fr);
+    gap: 2px 4px;
+    align-items: stretch;
+    min-height: 0;
+}
+
+/* Stat value cell (Team A or Team B number) */
+.foos-ana-val {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-height: 0;
+}
+
+/* Bidirectional bar: Team A bar (left) | Team B bar (right)
+   Both bars start at 50/50; JS will later adjust flex values for real data */
+.foos-ana-bar {
+    display: flex;
+    align-items: center;
+    min-height: 0;
+}
+
+.foos-bar-a,
+.foos-bar-b {
+    flex: 1;
+    height: 55%;
+    min-height: 3px;
+}
+
+/* Team A = white/light bar */
+.foos-bar-a {
+    background-color: #d0d0d0;
+    border: 1px solid #aaaaaa;
+    border-right: none;
+}
+
+/* Team B = black/dark bar */
+.foos-bar-b {
+    background-color: #555555;
+    border: 1px solid #333333;
+    border-left: 2px solid #888888; /* centre divider */
+}
+
+[data-bs-theme="dark"] .foos-bar-a {
+    background-color: #cccccc;
+    border-color: #999999;
+}
+
+[data-bs-theme="dark"] .foos-bar-b {
+    background-color: #707070;
+    border-color: #555555;
+    border-left-color: #aaaaaa;
+}
+
+/* Stat description label */
+.foos-ana-label {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    min-height: 0;
+}
+
+/* Header row: column titles "A" / "B" */
+.foos-ana-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--bs-secondary-color);
+    border-bottom: 1px solid var(--bs-border-color);
+    padding-bottom: 2px;
 }
