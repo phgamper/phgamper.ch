@@ -21,7 +21,6 @@ body {
 
 .foos-cell {
     height: 60px;
-    border-radius: 3px;
 }
 
 .foos-cell-black {
@@ -71,7 +70,6 @@ body {
 
 .foos-sb-cell {
     height: 44px;
-    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,7 +107,6 @@ body {
 
 .foos-tb-btn {
     height: 44px;
-    border-radius: 3px;
     border: 1px solid var(--bs-border-color);
     background-color: var(--bs-tertiary-bg);
     color: var(--bs-body-color);
