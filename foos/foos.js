@@ -80,16 +80,15 @@
     function updateScoreboard() {
         var elA = document.querySelector('[data-sb-sets][data-team="a"]');
         var elB = document.querySelector('[data-sb-sets][data-team="b"]');
-        if (elA) elA.textContent = setsA > 0 ? setsA : '';
-        if (elB) elB.textContent = setsB > 0 ? setsB : '';
+        if (elA) elA.textContent = setsA;
+        if (elB) elB.textContent = setsB;
 
         for (var s = 1; s <= 5; s++) {
-            var gA = goalsA[s - 1];
-            var gB = goalsB[s - 1];
             var cA = document.querySelector('[data-sb-goals][data-set="' + s + '"][data-team="a"]');
             var cB = document.querySelector('[data-sb-goals][data-set="' + s + '"][data-team="b"]');
-            if (cA) cA.textContent = gA > 0 ? gA : '';
-            if (cB) cB.textContent = gB > 0 ? gB : '';
+            var show = (s <= currentSet);
+            if (cA) { cA.style.visibility = show ? '' : 'hidden'; cA.textContent = show ? goalsA[s - 1] : ''; }
+            if (cB) { cB.style.visibility = show ? '' : 'hidden'; cB.textContent = show ? goalsB[s - 1] : ''; }
         }
     }
 
@@ -168,7 +167,7 @@
 
     // ── Event recording ──────────────────────────────────────────
 
-    function recordClick(cellEl) {
+    function recordClick(cellEl, auto) {
         if (matchOver) return;
 
         var cellType = cellEl.getAttribute('data-cell-type');
@@ -187,13 +186,20 @@
             teamA:        teamA,
             isTransition: isTransition,
             set:          currentSet,
-            cellEl:       cellEl
+            cellEl:       cellEl,
+            auto:         !!auto
         });
 
         updateHighlight(cellEl);
 
         if (cellType === 'goal') {
             handleGoal(teamA);
+            // Auto-place ball on the opponent's 5-rod
+            if (!matchOver) {
+                var opp     = teamA ? 'b' : 'a';
+                var oppGrey = document.querySelector('[data-cell-type="grey"][data-rod="5"][data-team="' + opp + '"]');
+                if (oppGrey) recordClick(oppGrey, true);
+            }
         }
 
         updateStats();
@@ -321,6 +327,14 @@
     // Undo
     document.querySelector('[aria-label="Undo"]').addEventListener('click', function () {
         if (eventHistory.length === 0) return;
+
+        // If the top event is an auto-placement, remove it silently so the undo
+        // targets the goal that caused it (one press = undo goal + placement).
+        if (eventHistory[eventHistory.length - 1].auto) {
+            eventHistory.pop();
+            if (eventHistory.length === 0) { highlightCell(null); updateStats(); return; }
+        }
+
         var removed = eventHistory.pop();
 
         if (removed.type === 'goal') {
@@ -360,4 +374,7 @@
         activateTab(document.querySelector('[data-tab="game"]'), false);
         updateStats();
     });
+
+    // ── Initial render ───────────────────────────────────────────
+    updateScoreboard();
 }());
