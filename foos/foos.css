@@ -45,9 +45,9 @@ footer #darkmode-toggle {
     vertical-align: middle;
 }
 
-/* ── Left: Input column (40%) ────────────────────────────────── */
+/* ── Left: Input column (1/3) ────────────────────────────────── */
 .foos-input-col {
-    flex: 2;          /* 2 / (2+1+2) = 40% of available width */
+    flex: 1;          /* equal third of available width */
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -55,9 +55,9 @@ footer #darkmode-toggle {
     min-height: 0;
 }
 
-/* ── Middle: Percentage analysis column (20%) ───────────────── */
+/* ── Middle: Percentage analysis column (1/3) ───────────────── */
 .foos-middle-col {
-    flex: 1;          /* 1 / (2+1+2) = 20% of available width */
+    flex: 1;          /* equal third of available width */
     min-width: 0;
     min-height: 0;
     display: flex;
@@ -74,13 +74,12 @@ footer #darkmode-toggle {
     gap: 12px;
 }
 
-/* Each percentage slot: circle chart on top, label below */
+/* Each percentage slot: circle chart fills the cell */
 .foos-pct-cell {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
     min-height: 0;
     padding: 0;
     overflow: hidden;
@@ -88,7 +87,7 @@ footer #darkmode-toggle {
 
 /* Donut chart wrapper: sized relative to its flex cell */
 .foos-pie-wrap {
-    width: 90%;
+    width: 95%;
     aspect-ratio: 1;
     flex-shrink: 0;
     position: relative;
@@ -194,11 +193,17 @@ footer #darkmode-toggle {
 }
 
 .foos-pct-label {
-    font-size: 0.55rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.65rem;
     text-align: center;
     white-space: nowrap;
     line-height: 1.2;
-    flex-shrink: 0;
+    pointer-events: none;
+    /* keep label inside the donut hole (≈ 31 % R from center) */
+    max-width: 55%;
 }
 
 /* Colored grid: fills remaining height in the input column */
@@ -319,7 +324,7 @@ footer #darkmode-toggle {
 
 /* ── Right: Analysis column (40%) ───────────────────────────── */
 .foos-analysis-col {
-    flex: 2;          /* 2 / (2+1+2) = 40% of available width */
+    flex: 1;          /* equal third of available width */
     min-width: 0;
     min-height: 0;
     display: flex;
