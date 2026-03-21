@@ -71,7 +71,7 @@ footer #darkmode-toggle {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    gap: 12px;
+    gap: 6px;
 }
 
 /* Each percentage slot: circle chart fills the cell */
@@ -87,8 +87,12 @@ footer #darkmode-toggle {
 
 /* Donut chart wrapper: sized relative to its flex cell */
 .foos-pie-wrap {
-    width: 95%;
+    /* Fill the cell's height (limiting dimension in a tall-narrow grid cell)
+       but never wider than the cell.  aspect-ratio keeps it square. */
+    height: 90%;
+    width: auto;
     aspect-ratio: 1;
+    max-width: 100%;
     flex-shrink: 0;
     position: relative;
 }
