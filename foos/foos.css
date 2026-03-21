@@ -95,14 +95,12 @@ footer #darkmode-toggle {
 }
 
 /* Outer ring: shows the "immediate" stat percentage.
-   Uses a conic-gradient starting at the top (-90 deg).
-   Fill colour and empty colour are inherited CSS custom properties
-   set per-team on the parent .foos-pct-cell.
-   The mask punches out the centre to create the donut ring.
-   52 % is the inner-radius of the donut (as a fraction of farthest-side = element
-   radius), giving a centre hole with diameter ≈ 52 % of the element width.  The
-   inner circle (.foos-pie-center) must be sized < 52 % of width to stay inside the
-   hole; 40 % is used to leave a visible gap between ring and inner circle. */
+   Uses a conic-gradient starting at the top (from -90 deg = 12 o'clock), clockwise.
+   Two-threshold mask punches out both the centre and the outer edge so only a thin
+   band is visible.  Geometry (wrap radius = R):
+     visible band = 82 %–96 % of R  →  41 %–48 % from the wrap centre
+     ring thickness ≈ 7 % of R
+   Inner ring (.foos-pie-center) occupies 28 %–35 % of R, leaving a ~6 % clear gap. */
 .foos-pie-ring {
     position: absolute;
     inset: 0;
@@ -112,20 +110,21 @@ footer #darkmode-toggle {
         var(--pie-fill-color) calc(var(--pct-outer, 0) * 1%),
         var(--pie-empty-color) 0
     );
-    -webkit-mask: radial-gradient(farthest-side, transparent 52%, black 53%);
-    mask: radial-gradient(farthest-side, transparent 52%, black 53%);
+    -webkit-mask: radial-gradient(farthest-side, transparent 81%, black 82%, black 96%, transparent 97%);
+    mask: radial-gradient(farthest-side, transparent 81%, black 82%, black 96%, transparent 97%);
 }
 
-/* Inner circle: shows the "eventually" stat percentage.
-   Positioned at the centre of the wrap, sized to fit inside the
-   donut hole.  The mask on .foos-pie-ring cuts off at 52 % of the
-   element radius (hole diameter ≈ 52 % of element width).  This
-   circle uses 40 % of the wrap width, which is safely below that
-   threshold and leaves a small visible gap between ring and circle. */
+/* Inner ring: shows the "eventually" stat percentage.
+   Positioned at the centre of the wrap and sized at 75 % of the wrap width, giving
+   an element radius of 37.5 % of R.  A two-threshold mask makes only a thin band
+   visible at the outer edge of this element:
+     visible band = 74 %–93 % of element radius  →  27.8 %–34.9 % from the wrap center
+     ring thickness ≈ 7 % of R  (matches outer ring physical thickness)
+   The center of the wrap (< 28 % of R) is fully transparent on both elements. */
 .foos-pie-center {
     position: absolute;
-    width: 40%;
-    height: 40%;
+    width: 75%;
+    height: 75%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -135,6 +134,8 @@ footer #darkmode-toggle {
         var(--pie-fill-color) calc(var(--pct-inner, 0) * 1%),
         var(--pie-empty-color) 0
     );
+    -webkit-mask: radial-gradient(farthest-side, transparent 73%, black 74%, black 93%, transparent 94%);
+    mask: radial-gradient(farthest-side, transparent 73%, black 74%, black 93%, transparent 94%);
 }
 
 /* Team A (white/light) colour scheme */
