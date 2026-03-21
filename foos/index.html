@@ -146,43 +146,68 @@
         <div class="foos-middle-col">
             <div class="foos-pct-grid">
 
-                <!-- Row 1 -->
-                <div class="foos-pct-cell" data-stat-pct="5-rod-pass">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">5 pass</div>
+                <!-- Row 1: 3-rod scored — left=Team A, right=Team B
+                     Outer ring = immediate %; inner circle = eventually % -->
+                <div class="foos-pct-cell" data-stat-pct="3-rod-scored" data-team="a">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">3 scrd</div>
                 </div>
-                <div class="foos-pct-cell" data-stat-pct="5-rod-pass-ev">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">5 pass ev.</div>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="foos-pct-cell" data-stat-pct="3-rod-scored">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">3 scored</div>
-                </div>
-                <div class="foos-pct-cell" data-stat-pct="3-rod-scored-ev">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">3 sc. ev.</div>
+                <div class="foos-pct-cell" data-stat-pct="3-rod-scored" data-team="b">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">3 scrd</div>
                 </div>
 
-                <!-- Row 3 -->
-                <div class="foos-pct-cell" data-stat-pct="2-rod-scored">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">2 scored</div>
+                <!-- Row 2: 5-to-3 pass -->
+                <div class="foos-pct-cell" data-stat-pct="5-to-3" data-team="a">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">5→3</div>
                 </div>
-                <div class="foos-pct-cell" data-stat-pct="2-rod-clear">
-                    <div class="foos-pie"></div>
-                    <div class="foos-pct-label">2 clear</div>
+                <div class="foos-pct-cell" data-stat-pct="5-to-3" data-team="b">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">5→3</div>
                 </div>
 
-                <!-- Row 4: placeholders -->
+                <!-- Row 3: 2-rod clear -->
+                <div class="foos-pct-cell" data-stat-pct="2-rod-clear" data-team="a">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">2 clr</div>
+                </div>
+                <div class="foos-pct-cell" data-stat-pct="2-rod-clear" data-team="b">
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
+                    <div class="foos-pct-label">2 clr</div>
+                </div>
+
+                <!-- Row 4: unused placeholders -->
                 <div class="foos-pct-cell foos-pct-placeholder">
-                    <div class="foos-pie"></div>
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
                     <div class="foos-pct-label">–</div>
                 </div>
                 <div class="foos-pct-cell foos-pct-placeholder">
-                    <div class="foos-pie"></div>
+                    <div class="foos-pie-wrap">
+                        <div class="foos-pie-ring"></div>
+                        <div class="foos-pie-center"></div>
+                    </div>
                     <div class="foos-pct-label">–</div>
                 </div>
 

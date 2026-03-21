@@ -409,6 +409,129 @@
         return s;
     }
 
+    // ── Percentage (donut chart) statistics ──────────────────────
+    //
+    // Returns immediate and "eventually" percentages (0–100) for:
+    //   3-rod scored  – 3-rod possession directly followed by same-team goal
+    //   5-to-3        – 5-rod possession directly followed by same-team 3-rod
+    //   2-rod clear   – 2-rod possession directly followed by:
+    //                     same-team 5-rod or 3-rod, same-team goal, OR
+    //                     opponent's 2-rod
+    //
+    // "Eventually" variants collapse consecutive same-rod same-team events
+    // into a single possession before applying the same direct-follow test.
+
+    function computePctStats(events) {
+        var m = events.filter(function (e) {
+            return e.type === 'rod' || e.type === 'grey' || e.type === 'goal';
+        });
+
+        function pct(n, d) { return d > 0 ? Math.round(n / d * 100) : 0; }
+
+        function calcStats(seq) {
+            var poss3A = 0, poss3B = 0;
+            var poss5A = 0, poss5B = 0;
+            var poss2A = 0, poss2B = 0;
+            var scored3A = 0, scored3B = 0;
+            var five3A = 0, five3B = 0;
+            var clear2A = 0, clear2B = 0;
+
+            for (var i = 0; i < seq.length; i++) {
+                var e = seq[i];
+                var eBall = (e.type === 'rod' || e.type === 'grey');
+
+                if (eBall) {
+                    if (e.teamA) {
+                        if (e.rod === ROD_3) poss3A++;
+                        else if (e.rod === ROD_5) poss5A++;
+                        else if (e.rod === ROD_2) poss2A++;
+                    } else {
+                        if (e.rod === ROD_3) poss3B++;
+                        else if (e.rod === ROD_5) poss5B++;
+                        else if (e.rod === ROD_2) poss2B++;
+                    }
+                }
+
+                if (i + 1 < seq.length) {
+                    var n = seq[i + 1];
+                    var nBall = (n.type === 'rod' || n.type === 'grey');
+
+                    // 3-rod scored: 3-rod followed by same-team goal
+                    if (eBall && e.rod === ROD_3 && n.type === 'goal' && e.teamA === n.teamA) {
+                        if (e.teamA) scored3A++; else scored3B++;
+                    }
+
+                    // 5-to-3: 5-rod followed by same-team 3-rod
+                    if (eBall && e.rod === ROD_5 && nBall && n.rod === ROD_3 && e.teamA === n.teamA) {
+                        if (e.teamA) five3A++; else five3B++;
+                    }
+
+                    // 2-rod clear: 2-rod followed by same-team 5/3-rod, same-team goal,
+                    // or opponent 2-rod
+                    if (eBall && e.rod === ROD_2) {
+                        var isClear = (nBall && n.teamA === e.teamA && (n.rod === ROD_5 || n.rod === ROD_3)) ||
+                                      (n.type === 'goal' && n.teamA === e.teamA) ||
+                                      (nBall && n.rod === ROD_2 && n.teamA !== e.teamA);
+                        if (isClear) { if (e.teamA) clear2A++; else clear2B++; }
+                    }
+                }
+            }
+
+            return {
+                scored3A: pct(scored3A, poss3A), scored3B: pct(scored3B, poss3B),
+                five3A:   pct(five3A,   poss5A), five3B:   pct(five3B,   poss5B),
+                clear2A:  pct(clear2A,  poss2A), clear2B:  pct(clear2B,  poss2B)
+            };
+        }
+
+        // Compressed sequence: consecutive same-rod same-team ball events → 1
+        var compressed = [];
+        for (var j = 0; j < m.length; j++) {
+            var ce = m[j];
+            if (compressed.length > 0) {
+                var prev = compressed[compressed.length - 1];
+                var prevBall = (prev.type === 'rod' || prev.type === 'grey');
+                var ceBall   = (ce.type   === 'rod' || ce.type   === 'grey');
+                if (prevBall && ceBall && prev.rod === ce.rod && prev.teamA === ce.teamA) {
+                    continue; // merge into previous
+                }
+            }
+            compressed.push(ce);
+        }
+
+        var imm = calcStats(m);
+        var ev  = calcStats(compressed);
+
+        return {
+            scored3A:   imm.scored3A, scored3AEv: ev.scored3A,
+            scored3B:   imm.scored3B, scored3BEv: ev.scored3B,
+            five3A:     imm.five3A,   five3AEv:   ev.five3A,
+            five3B:     imm.five3B,   five3BEv:   ev.five3B,
+            clear2A:    imm.clear2A,  clear2AEv:  ev.clear2A,
+            clear2B:    imm.clear2B,  clear2BEv:  ev.clear2B
+        };
+    }
+
+    // Map stat-pct keys and teams → (outer %, inner %) then write CSS vars.
+    function updatePctCharts(ps) {
+        var data = {
+            '3-rod-scored': { a: [ps.scored3A, ps.scored3AEv], b: [ps.scored3B, ps.scored3BEv] },
+            '5-to-3':       { a: [ps.five3A,   ps.five3AEv  ], b: [ps.five3B,   ps.five3BEv  ] },
+            '2-rod-clear':  { a: [ps.clear2A,  ps.clear2AEv ], b: [ps.clear2B,  ps.clear2BEv ] }
+        };
+        document.querySelectorAll('[data-stat-pct]').forEach(function (cell) {
+            var stat = cell.getAttribute('data-stat-pct');
+            var team = cell.getAttribute('data-team');
+            if (!stat || !team || !data[stat]) return;
+            var vals = data[stat][team];
+            if (!vals) return;
+            var wrap = cell.querySelector('.foos-pie-wrap');
+            if (!wrap) return;
+            wrap.style.setProperty('--pct-outer', vals[0]);
+            wrap.style.setProperty('--pct-inner', vals[1]);
+        });
+    }
+
     function setBar(barEl, vA, vB) {
         var total = vA + vB;
         barEl.querySelector('.foos-bar-a').style.flex = (total === 0 ? 1 : vA);
@@ -460,6 +583,8 @@
                 }
             });
         });
+
+        updatePctCharts(computePctStats(filtered));
     }
 
     // ── Event wiring ─────────────────────────────────────────────
