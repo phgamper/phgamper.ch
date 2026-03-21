@@ -415,8 +415,7 @@
     //   3-rod scored  – 3-rod possession directly followed by same-team goal
     //   5-to-3        – 5-rod possession directly followed by same-team 3-rod
     //   2-rod clear   – 2-rod possession directly followed by:
-    //                     same-team 5-rod or 3-rod, same-team goal, OR
-    //                     opponent's 2-rod
+    //                     same-team 5-rod or 3-rod, opponent's 2-rod, OR any goal
     //
     // "Eventually" variants collapse consecutive same-rod same-team events
     // into a single possession before applying the same direct-follow test.
@@ -466,11 +465,11 @@
                         if (e.teamA) five3A++; else five3B++;
                     }
 
-                    // 2-rod clear: 2-rod followed by same-team 5/3-rod, same-team goal,
-                    // or opponent 2-rod
+                    // 2-rod clear: 2-rod followed by same-team 5/3-rod, opponent 2-rod,
+                    // or any goal (including Föteli)
                     if (eBall && e.rod === ROD_2) {
                         var isClear = (nBall && n.teamA === e.teamA && (n.rod === ROD_5 || n.rod === ROD_3)) ||
-                                      (n.type === 'goal' && n.teamA === e.teamA) ||
+                                      (n.type === 'goal') ||
                                       (nBall && n.rod === ROD_2 && n.teamA !== e.teamA);
                         if (isClear) { if (e.teamA) clear2A++; else clear2B++; }
                     }
