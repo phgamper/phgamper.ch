@@ -1,0 +1,494 @@
+/* Standalone app page – no background image, no scroll */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: none;
+    font-family: "Varela Round", Ubuntu, Helvetica, Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Main app area: fills all space above the footer ────────── */
+/* 32px margin on all sides keeps content away from the viewport
+   edges; gap separates the columns. */
+.foos-main {
+    flex: 1;
+    min-height: 0;
+    width: calc(100vw - 64px);
+    margin: 32px auto;
+    display: flex;
+    gap: 32px;
+    overflow: hidden;
+    align-items: stretch;
+}
+
+/* ── Footer overrides ───────────────────────────────────────── */
+/* footer.css sets margin-top:36px – remove it here so the footer
+   sits flush against the app area with no extra gap. */
+footer {
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+/* darkmode.css gives #darkmode-toggle padding:25px; font-size:2em
+   (designed for the full-page navbar).  Scale it down for the
+   compact footer context. */
+footer #darkmode-toggle {
+    padding: 0;
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+/* ── Left: Input column (1/3) ────────────────────────────────── */
+.foos-input-col {
+    flex: 1;          /* equal third of available width */
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+}
+
+/* ── Middle: Percentage analysis column (1/3) ───────────────── */
+.foos-middle-col {
+    flex: 1;          /* equal third of available width */
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2-column × 4-row grid filling the column */
+.foos-pct-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+}
+
+/* Each percentage slot: circle chart fills the cell */
+.foos-pct-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Donut chart wrapper: sized relative to its flex cell */
+.foos-pie-wrap {
+    /* Fill the cell's height (limiting dimension in a tall-narrow grid cell)
+       but never wider than the cell.  aspect-ratio keeps it square. */
+    height: 90%;
+    width: auto;
+    aspect-ratio: 1;
+    max-width: 100%;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Outer ring: shows the "immediate" stat percentage.
+   Geometry (wrap radius = R):
+     Ring band = 72 %–97 % of R  →  36 %–48.5 % from wrap center
+     Ring thickness = 25 % of R  (≈ 2.5 × the original 10 %)
+   Background layers (bottom → top):
+     1. Thin border ring at the outer edge of the band (≈ 1 px, always visible)
+     2. Conic arc fill (opaque for the filled portion, transparent for the rest)
+   The empty arc shows only the thin outer-edge border; the filled arc is solid.
+   Gap to inner ring: outer ring inner edge (72 % R) minus inner ring outer edge
+   (97 % × 58 % × R = 56.3 % R) ≈ 15.7 % R ≈ 4 px at a 50 px-wide wrap. */
+.foos-pie-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            from 0deg,
+            var(--pie-fill-color) calc(var(--pct-outer, 0) * 1%),
+            transparent 0
+        ),
+        radial-gradient(
+            farthest-side,
+            transparent 92%,
+            var(--pie-border-color) 93%,
+            transparent 98%
+        );
+    -webkit-mask: radial-gradient(farthest-side, transparent 71%, black 72%, black 97%, transparent 98%);
+    mask: radial-gradient(farthest-side, transparent 71%, black 72%, black 97%, transparent 98%);
+}
+
+/* Inner ring: shows the "eventually" stat percentage.
+   Element is sized at 58 % of the wrap width → element radius ri = 0.58 R.
+   Geometry:
+     Ring band = 54 %–97 % of ri  →  31 %–56 % of R from wrap center
+     Ring thickness = 43 % of ri = 25 % of R  (matches outer ring thickness)
+   Background layers same strategy as outer ring: border at outer edge of band.
+   The center of the wrap (< 31 % of R) is fully transparent on both elements. */
+.foos-pie-center {
+    position: absolute;
+    width: 58%;
+    height: 58%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            from 0deg,
+            var(--pie-fill-color) calc(var(--pct-inner, 0) * 1%),
+            transparent 0
+        ),
+        radial-gradient(
+            farthest-side,
+            transparent 88%,
+            var(--pie-border-color) 89%,
+            transparent 98%
+        );
+    -webkit-mask: radial-gradient(farthest-side, transparent 53%, black 54%, black 97%, transparent 98%);
+    mask: radial-gradient(farthest-side, transparent 53%, black 54%, black 97%, transparent 98%);
+}
+
+/* Team A (white/light) colour scheme */
+.foos-pct-cell[data-team="a"] {
+    --pie-fill-color: #d0d0d0;
+    --pie-border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Team B (black/dark) colour scheme */
+.foos-pct-cell[data-team="b"] {
+    --pie-fill-color: #555555;
+    --pie-border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Placeholder cells: neutral colours, dimmed */
+.foos-pct-placeholder {
+    --pie-fill-color: #888888;
+    --pie-border-color: rgba(0, 0, 0, 0.10);
+}
+
+.foos-pct-placeholder .foos-pie-ring,
+.foos-pct-placeholder .foos-pie-center {
+    opacity: 0.35;
+}
+
+[data-bs-theme="dark"] .foos-pct-cell[data-team="a"] {
+    --pie-fill-color: #cccccc;
+    --pie-border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-bs-theme="dark"] .foos-pct-cell[data-team="b"] {
+    --pie-fill-color: #707070;
+    --pie-border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-bs-theme="dark"] .foos-pct-placeholder {
+    --pie-fill-color: #aaaaaa;
+    --pie-border-color: rgba(255, 255, 255, 0.12);
+}
+
+.foos-pct-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.65rem;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.2;
+    pointer-events: none;
+    /* keep label inside the donut hole (≈ 31 % R from center) */
+    max-width: 55%;
+}
+
+/* Colored grid: fills remaining height in the input column */
+.foos-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 4px;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+/* Grid cells: height comes from the flexible grid rows, no fixed height needed */
+
+.foos-cell-black {
+    background-color: #000000;
+    border: 1px solid transparent;
+}
+
+/* In dark mode the page background is also very dark, so give the
+   black cells a bright border to make them visible – mirroring the
+   border on white cells in light mode. */
+[data-bs-theme="dark"] .foos-cell-black {
+    border-color: #aaaaaa;
+}
+
+.foos-cell-grey {
+    background-color: #808080;
+}
+
+.foos-cell-white {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+}
+
+.foos-cell-transparent {
+    background-color: transparent;
+}
+
+/* Colspan helpers */
+.foos-span-2 {
+    grid-column: span 2;
+}
+
+.foos-span-3 {
+    grid-column: span 3;
+}
+
+/* Bo5 Scoreboard
+   8 columns: color indicator | team name | sets total | ×5 set points */
+.foos-scoreboard {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1.5fr repeat(5, 1.5fr);
+    gap: 4px;
+    width: 100%;
+}
+
+.foos-sb-cell {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.foos-sb-name {
+    justify-content: flex-start;
+    padding: 0 8px;
+}
+
+/* Sets total: larger and bold to stand out from individual scores */
+.foos-sb-sets {
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+/* Individual set scores: same size as sets cell, grey background matching the playfield */
+.foos-sb-score {
+    border: 1px solid #666666;
+    background-color: #808080;
+    color: #ffffff;
+    font-weight: 400;
+}
+
+/* Toolbar
+   12-column grid matching the input column width */
+.foos-toolbar {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4px;
+    width: 100%;
+}
+
+.foos-tb-btn {
+    height: 44px;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.15s ease;
+}
+
+.foos-tb-btn:hover {
+    opacity: 0.75;
+}
+
+.foos-tb-empty {
+    height: 44px;
+}
+
+/* ── Right: Analysis column (40%) ───────────────────────────── */
+.foos-analysis-col {
+    flex: 1;          /* equal third of available width */
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+/* Tab bar above the analysis grid */
+.foos-tabs {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    justify-content: flex-start;
+}
+
+.foos-tab {
+    flex: none;
+    width: 3.8rem;
+    height: 36px;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.15s ease;
+}
+
+.foos-tab:hover {
+    opacity: 0.75;
+}
+
+.foos-tab-active {
+    background-color: var(--bs-body-bg);
+    border-bottom-color: var(--bs-body-bg);
+    font-weight: 700;
+}
+
+/* 4-column grid: [Team A val] [bi-dir bar] [Team B val] [stat label]
+   15 stat rows that share remaining height equally  */
+.foos-analysis-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 2.5rem auto;
+    grid-template-rows: repeat(15, 1fr);
+    gap: 2px 4px;
+    align-items: stretch;
+    min-height: 0;
+}
+
+/* Stat value cell (Team A or Team B number) */
+.foos-ana-val {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-tertiary-bg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-height: 0;
+}
+
+/* Bidirectional bar: Team B bar (left) | Team A bar (right)
+   Both bars start at 50/50; JS will later adjust flex values for real data */
+.foos-ana-bar {
+    display: flex;
+    align-items: center;
+    min-height: 0;
+}
+
+.foos-bar-a,
+.foos-bar-b {
+    flex: 1;
+    height: 75%; /* ~50% taller than the original 50% per design request */
+    min-height: 6px;
+}
+
+/* Team A = white/light bar – RIGHT side */
+.foos-bar-a {
+    background-color: #d0d0d0;
+    border: 1px solid #aaaaaa;
+    border-left: none;
+}
+
+/* Team B = black/dark bar – LEFT side */
+.foos-bar-b {
+    background-color: #555555;
+    border: 1px solid #333333;
+    border-right: 2px solid #888888; /* centre divider */
+}
+
+[data-bs-theme="dark"] .foos-bar-a {
+    background-color: #cccccc;
+    border-color: #999999;
+}
+
+[data-bs-theme="dark"] .foos-bar-b {
+    background-color: #707070;
+    border-color: #555555;
+    border-right-color: #aaaaaa;
+}
+
+/* Stat description label */
+.foos-ana-label {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    min-height: 0;
+}
+
+/* ── Clickable grid cells ────────────────────────────────── */
+/* Colored rod/goal cells and grey placement cells become interactive. */
+.foos-clickable {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.1s ease;
+}
+
+.foos-clickable:hover {
+    opacity: 0.8;
+}
+
+.foos-clickable:active {
+    opacity: 0.55;
+}
+
+/* Ring indicator: marks the current ball position after a click. */
+.foos-cell-current {
+    box-shadow: inset 0 0 0 3px rgba(255, 210, 0, 0.85);
+}
+
+/* ── Subtle rod/goal labels inside coloured cells ────────── */
+/* Text colour is chosen to be just barely distinguishable from the
+   cell background, keeping labels visually quiet. */
+.foos-cell-label {
+    font-size: 0.6rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Black cell: label slightly lighter than black */
+.foos-cell-black .foos-cell-label {
+    color: #1e1e1e;
+}
+
+/* White cell: label slightly darker than white */
+.foos-cell-white .foos-cell-label {
+    color: #e4e4e4;
+}
+
+/* Disabled state: applied to .foos-grid when the match is over */
+.foos-grid-disabled .foos-clickable {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+}
+
