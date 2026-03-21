@@ -95,12 +95,15 @@ footer #darkmode-toggle {
 }
 
 /* Outer ring: shows the "immediate" stat percentage.
-   Uses a conic-gradient starting at the top (from 0 deg = 12 o'clock), clockwise.
-   Two-threshold mask creates a thin visible band; the filled arc is solid and the
-   empty arc is transparent so only the faint --pie-track-color layer shows through.
    Geometry (wrap radius = R):
-     visible band = 86 %–96 % of R  →  43 %–48 % from the wrap center
-     ring thickness ≈ 5 % of R */
+     Ring band = 72 %–97 % of R  →  36 %–48.5 % from wrap center
+     Ring thickness = 25 % of R  (≈ 2.5 × the original 10 %)
+   Background layers (bottom → top):
+     1. Thin border ring at the outer edge of the band (≈ 1 px, always visible)
+     2. Conic arc fill (opaque for the filled portion, transparent for the rest)
+   The empty arc shows only the thin outer-edge border; the filled arc is solid.
+   Gap to inner ring: outer ring inner edge (72 % R) minus inner ring outer edge
+   (97 % × 58 % × R = 56.3 % R) ≈ 15.7 % R ≈ 4 px at a 50 px-wide wrap. */
 .foos-pie-ring {
     position: absolute;
     inset: 0;
@@ -111,23 +114,27 @@ footer #darkmode-toggle {
             var(--pie-fill-color) calc(var(--pct-outer, 0) * 1%),
             transparent 0
         ),
-        var(--pie-track-color);
-    -webkit-mask: radial-gradient(farthest-side, transparent 85%, black 86%, black 96%, transparent 97%);
-    mask: radial-gradient(farthest-side, transparent 85%, black 86%, black 96%, transparent 97%);
+        radial-gradient(
+            farthest-side,
+            transparent 92%,
+            var(--pie-border-color) 93%,
+            transparent 98%
+        );
+    -webkit-mask: radial-gradient(farthest-side, transparent 71%, black 72%, black 97%, transparent 98%);
+    mask: radial-gradient(farthest-side, transparent 71%, black 72%, black 97%, transparent 98%);
 }
 
 /* Inner ring: shows the "eventually" stat percentage.
-   Positioned at the center of the wrap and sized at 88 % of the wrap width, giving
-   an element radius of 44 % of R.  A two-threshold mask exposes a thin band whose
-   outer edge (97 % × 44 % = 42.7 % of R) directly abuts the outer ring's inner edge
-   (43 % of R), leaving no gap between rings.  The center is fully transparent.
+   Element is sized at 58 % of the wrap width → element radius ri = 0.58 R.
    Geometry:
-     visible band = 86 %–97 % of element radius  →  37.8 %–42.7 % from the wrap center
-     ring thickness ≈ 5 % of R  (matches outer ring thickness) */
+     Ring band = 54 %–97 % of ri  →  31 %–56 % of R from wrap center
+     Ring thickness = 43 % of ri = 25 % of R  (matches outer ring thickness)
+   Background layers same strategy as outer ring: border at outer edge of band.
+   The center of the wrap (< 31 % of R) is fully transparent on both elements. */
 .foos-pie-center {
     position: absolute;
-    width: 88%;
-    height: 88%;
+    width: 58%;
+    height: 58%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -138,27 +145,32 @@ footer #darkmode-toggle {
             var(--pie-fill-color) calc(var(--pct-inner, 0) * 1%),
             transparent 0
         ),
-        var(--pie-track-color);
-    -webkit-mask: radial-gradient(farthest-side, transparent 85%, black 86%, black 97%, transparent 98%);
-    mask: radial-gradient(farthest-side, transparent 85%, black 86%, black 97%, transparent 98%);
+        radial-gradient(
+            farthest-side,
+            transparent 88%,
+            var(--pie-border-color) 89%,
+            transparent 98%
+        );
+    -webkit-mask: radial-gradient(farthest-side, transparent 53%, black 54%, black 97%, transparent 98%);
+    mask: radial-gradient(farthest-side, transparent 53%, black 54%, black 97%, transparent 98%);
 }
 
 /* Team A (white/light) colour scheme */
 .foos-pct-cell[data-team="a"] {
     --pie-fill-color: #d0d0d0;
-    --pie-track-color: rgba(0, 0, 0, 0.08);
+    --pie-border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Team B (black/dark) colour scheme */
 .foos-pct-cell[data-team="b"] {
     --pie-fill-color: #555555;
-    --pie-track-color: rgba(0, 0, 0, 0.08);
+    --pie-border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Placeholder cells: neutral colours, dimmed */
 .foos-pct-placeholder {
     --pie-fill-color: #888888;
-    --pie-track-color: rgba(0, 0, 0, 0.06);
+    --pie-border-color: rgba(0, 0, 0, 0.10);
 }
 
 .foos-pct-placeholder .foos-pie-ring,
@@ -168,17 +180,17 @@ footer #darkmode-toggle {
 
 [data-bs-theme="dark"] .foos-pct-cell[data-team="a"] {
     --pie-fill-color: #cccccc;
-    --pie-track-color: rgba(255, 255, 255, 0.1);
+    --pie-border-color: rgba(255, 255, 255, 0.18);
 }
 
 [data-bs-theme="dark"] .foos-pct-cell[data-team="b"] {
     --pie-fill-color: #707070;
-    --pie-track-color: rgba(255, 255, 255, 0.1);
+    --pie-border-color: rgba(255, 255, 255, 0.18);
 }
 
 [data-bs-theme="dark"] .foos-pct-placeholder {
     --pie-fill-color: #aaaaaa;
-    --pie-track-color: rgba(255, 255, 255, 0.08);
+    --pie-border-color: rgba(255, 255, 255, 0.12);
 }
 
 .foos-pct-label {
